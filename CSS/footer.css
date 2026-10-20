@@ -1,0 +1,36 @@
+footer {
+    width: 100%;
+    min-height: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    background: 
+    linear-gradient(#245a48, #378b6f38),
+    url(../assets/all_images/estampa5.jpg) center / cover no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+footer .content-footer {
+    height: 80%;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+footer .content-footer li {
+    display: flex;
+    gap: 10px;
+}
+
+footer .content-footer a {
+    text-decoration: none;
+    color: #fff;
+}

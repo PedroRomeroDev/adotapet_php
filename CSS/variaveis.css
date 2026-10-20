@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Madimi+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Madimi+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: sair 0.3s ease-in both;
+}
+
+::view-transition-new(root) {
+    animation: entrar 0.3s ease-out both;
+}
+
+@keyframes sair {
+    to {
+        /* transform: translateX(0%); */
+        opacity: 100%;
+    }
+}
+
+@keyframes entrar {
+    from {
+        /* transform: translateX(100%); */
+        opacity: 0%;
+    }
+}
+
+:root {
+    --fonte-titulo: 'Madimi One';
+    --fonte-texto: 'Roboto';
+    --fonte-botoes: 'Poppins';
+    --cor-primaria: #378B6F;
+    --cor-primaria-suave: #378b6f0c;
+    --cor-aviso: #FFA500;
+    --cor-preto-suave: #0000002c;
+
+    --sobre-verde: var(--cor-primaria, #378B6F);
+    --sobre-verde-escuro: color-mix(in srgb, var(--sobre-verde) 62%, black);
+    --sobre-menta: color-mix(in srgb, var(--sobre-verde) 11%, white);
+    --sobre-menta-borda: color-mix(in srgb, var(--sobre-verde) 24%, white);
+    --sobre-texto: color-mix(in srgb, var(--sobre-verde) 14%, #1b1f1d);
+    --sobre-texto-suave: color-mix(in srgb, var(--sobre-verde) 12%, #5f6663);
+    --sobre-fundo: color-mix(in srgb, var(--sobre-verde) 3%, white);
+    --sobre-estrela: var(--cor-aviso, #FFA500);
+    --sobre-raio: 20px;
+
+    --danger-background: #ff000011;
+    --danger-border: #a10000;
+    --danger-text: #a10000;
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: var(--fonte-texto);
+}
+
+button {
+    font-family: var(--fonte-botoes);
+}

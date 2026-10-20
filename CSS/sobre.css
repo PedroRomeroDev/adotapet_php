@@ -1,0 +1,356 @@
+main {
+    background: var(--sobre-fundo);
+    color: var(--sobre-texto);
+    line-height: 1.65;
+}
+
+main h2,
+main h3 {
+    font-family: var(--fonte-titulo, inherit);
+    font-weight: 400;
+    color: var(--sobre-verde-escuro);
+    margin: 0;
+}
+
+main p {
+    margin: 0;
+}
+
+.sobre-wrap {
+    width: min(1120px, 100% - 48px);
+    margin-inline: auto;
+}
+
+.hero {
+    background: var(--sobre-menta);
+    border-bottom: 1px solid var(--sobre-menta-borda);
+    padding: 72px 0;
+}
+
+.hero .sobre-wrap {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+}
+
+.hero-texto h2 {
+    font-size: clamp(2.2rem, 4.6vw, 3.6rem);
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.hero-texto p {
+    max-width: 52ch;
+    font-size: 1.1rem;
+    color: var(--sobre-texto-suave);
+}
+
+.hero-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+    border: 1px solid var(--sobre-menta-borda);
+    border-radius: 5px;
+    overflow: hidden;
+    height: 300px;
+}
+
+.hero-logo img {
+    width: 100%;
+    height: auto;
+}
+
+.hero-logo span {
+    font-weight: 600;
+    font-family: var(--fonte-titulo, inherit);
+    font-size: 1.8rem;
+    color: #000;
+}
+
+.hero-logo span b {
+    font-weight: 600;
+    font-family: var(--fonte-titulo, inherit);
+    color: var(--cor-primaria);
+}
+
+.passos {
+    padding: 80px 0 40px;
+}
+
+.passos-titulo {
+    max-width: 60ch;
+    margin-bottom: 40px;
+}
+
+.passos-titulo h2 {
+    font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+    margin-bottom: 10px;
+}
+
+.passos-titulo p {
+    color: var(--sobre-texto-suave);
+}
+
+.passos-lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    counter-reset: passo;
+}
+
+.passos-lista li {
+    counter-increment: passo;
+    position: relative;
+    padding: 28px 26px 30px;
+    background: #fff;
+    border: 1px solid var(--sobre-menta-borda);
+    border-radius: var(--sobre-raio);
+}
+
+.passos-lista li::before {
+    content: counter(passo);
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 18px;
+    border-radius: 50%;
+    background: var(--sobre-verde);
+    color: #fff;
+    font-weight: 600;
+}
+
+.passos-lista h3 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+}
+
+.passos-lista p {
+    color: var(--sobre-texto-suave);
+}
+
+.proposito {
+    padding: 40px 0 80px;
+}
+
+.proposito-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    overflow: hidden;
+    border-radius: 28px;
+    background: var(--sobre-verde-escuro);
+    color: #fff;
+}
+
+.proposito-box > div {
+    padding: 48px 44px;
+}
+
+.proposito-box > div + div {
+    background: var(--sobre-verde);
+}
+
+.proposito-box h3 {
+    color: #fff;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    margin-bottom: 14px;
+}
+
+.proposito-box p {
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 46ch;
+}
+
+.reviews-container {
+    padding: 80px 0 96px;
+    background: #fff;
+    border-top: 1px solid var(--sobre-menta-borda);
+    scroll-margin-top: 80px;
+}
+
+.reviews-container .sobre-wrap {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 56px;
+    align-items: start;
+}
+
+.review-title {
+    position: sticky;
+    top: 100px;
+}
+
+.review-title h2 {
+    font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+    margin-bottom: 10px;
+}
+
+.review-title p {
+    color: var(--sobre-texto-suave);
+    margin-bottom: 24px;
+}
+
+.review-img img {
+    display: block;
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    margin-bottom: 24px;
+}
+
+.btn-avaliar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 22px;
+    font-family: var(--fonte-botoes, 'Poppins', sans-serif);
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--sobre-verde);
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-avaliar:hover {
+    background: var(--sobre-verde-escuro);
+}
+
+.btn-avaliar:active {
+    transform: scale(0.98);
+}
+
+.btn-avaliar:focus-visible {
+    outline: 3px solid rgba(55, 139, 111, 0.4);
+    outline-offset: 3px;
+}
+
+.reviews-cards-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.review-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    background: var(--sobre-fundo);
+    border: 1px solid var(--sobre-menta-borda);
+    border-radius: var(--sobre-raio);
+}
+
+.review-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.avatar {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--sobre-menta);
+    border: 1px solid var(--sobre-menta-borda);
+    color: var(--sobre-verde-escuro);
+    font-weight: 600;
+}
+
+.card-header-text p:first-child {
+    font-weight: 600;
+    color: var(--sobre-texto);
+}
+
+.stars {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: var(--sobre-estrela);
+    margin-top: 2px;
+}
+
+.review-content-card p {
+    color: var(--sobre-texto-suave);
+}
+
+@media (max-width: 960px) {
+    .hero .sobre-wrap,
+    .reviews-container .sobre-wrap {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding: 48px 0;
+    }
+
+    .hero-logo {
+        order: -1;
+        flex-direction: row;
+        justify-content: center;
+        padding: 24px;
+    }
+
+    .hero-logo img {
+        width: 80px;
+    }
+
+    .passos-lista {
+        grid-template-columns: 1fr;
+    }
+
+    .proposito-box {
+        grid-template-columns: 1fr;
+    }
+
+    .review-title {
+        position: static;
+    }
+
+    .review-img img {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 560px) {
+    .sobre-wrap {
+        width: calc(100% - 32px);
+    }
+
+    .passos {
+        padding: 56px 0 24px;
+    }
+
+    .proposito {
+        padding: 24px 0 56px;
+    }
+
+    .proposito-box > div {
+        padding: 32px 24px;
+    }
+
+    .reviews-container {
+        padding: 56px 0 64px;
+    }
+
+    .reviews-cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-avaliar {
+        transition: none;
+    }
+}

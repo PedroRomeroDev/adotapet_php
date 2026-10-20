@@ -1,0 +1,155 @@
+.content-hero{
+    --fonte-titulo: var(--fonte-texto);
+}
+
+.content-hero .span-warn{
+    --cor-primaria: var(--cor-aviso);
+    display: block;
+}
+
+.content-hero .block{
+    display: block;
+}
+
+.lost-animals-container{
+    width: 100%;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.171);
+    margin-bottom: 50px;
+}
+
+.first-row-container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.first-row-container h2{
+    font-size: 35px;
+}
+
+.input-container{
+    display: flex;
+    width: 260px;
+    border-radius: 50px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.search-input {
+    width: 80%;
+    height: 50px;
+    padding-left: 20px;
+    border: none;
+    font-size: 16px;
+    font-family: var(--fonte-texto);
+    color: #333;
+    outline: none;
+    background: transparent;
+}
+
+.search-input::placeholder {
+    color: #b3b3b3;
+}
+
+.search-btn {
+    background-color: var(--cor-primaria);
+    border: none;
+    width: 20%;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.search-btn:hover {
+    background-color: #2b6d57; 
+}
+
+.cards-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-top: 60px;
+}
+
+.card{
+    margin-bottom: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border: solid 1px #0000001f;
+    border-radius: 10px;
+    position: relative;
+}
+
+.card .zap {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    cursor: pointer;
+    background-color: #2b6d57;
+    padding: 1px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    color: #fff;
+    border-radius: 50%;
+}
+
+.card .zap i {
+    font-size: 30px;
+    line-height: 50px;
+}
+
+.card .first-row-card img{
+    border-radius: 5px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card .first-row-card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card .first-row-card h3{
+    font-size: 25px;
+    width: 50%;
+    text-align: center;
+    color: var(--cor-primaria);
+}
+
+@media (max-width: 600px) {
+    
+    .first-row-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .input-container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 660px){
+    .first-row-container {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .first-row-container .input-container {
+        width: 90%;
+        margin: 0 auto;
+    }
+}

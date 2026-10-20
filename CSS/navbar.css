@@ -1,0 +1,228 @@
+nav {
+    position: relative;            
+    z-index: 3000;
+    display: flex;
+    align-items: center;       
+    justify-content: space-between;
+    width: 85%;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: 0px 5px 5px 0px #0000001a;
+    border-radius: 5px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo .menuBtn {
+    display: none;
+    background: none;
+    border: none;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.logo .menuBtn i {
+    font-size: 30px;
+}
+
+nav .logo a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: #000;
+}
+
+nav .logo h1 {
+    font-size: 30px;
+    font-weight: 600;
+    font-family: var(--fonte-titulo);
+}
+
+nav .logo h1 span {
+    color: var(--cor-primaria);
+    font-family: var(--fonte-titulo);
+}
+
+.content-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    height: 100%;
+}
+
+nav .links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+nav .links ul li {
+    position: relative;
+}
+
+nav .links ul li a {
+    display: block;
+    padding: 12px 18px;
+    text-decoration: none;
+    color: #000;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+nav .links ul li a:hover {
+    background-color: color-mix(in srgb, var(--cor-primaria) 12%, white);
+}
+
+nav .links ul li ul.dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 200px;
+    display: block;
+    background-color: white;
+    border-radius: 10px;
+    padding: 8px 0;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+nav .links ul li ul.dropdown::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 0;
+    right: 0;
+    height: 8px;
+}
+
+nav .links ul li ul.dropdown li {
+    display: block;
+}
+
+nav .links ul li ul.dropdown li a {
+    color: #333;
+    padding: 10px 15px;
+    text-align: left;
+}
+
+nav .links ul li ul.dropdown li a:hover {
+    background-color: #f1f1f1;
+}
+
+nav .links ul li:hover ul.dropdown,
+nav .links ul li:focus-within ul.dropdown {  
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.acount-buton-notLogin,
+.acount {
+    display: inline-flex;          
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;              
+    height: 40px;
+    padding: 0 18px;
+    white-space: nowrap;
+    border: none;
+    background-color: var(--cor-primaria);
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: filter 0.2s ease;
+}
+
+.acount-buton-notLogin:hover,
+.acount:hover {
+    filter: brightness(1.08);
+}
+
+@media (max-width: 720px) {
+
+    nav {
+        flex-direction: column;
+        align-items: stretch;      
+        justify-content: flex-start;
+        gap: 0;
+    }
+
+    #menuBtn {
+        display: block;
+    }
+
+    
+    .content-nav {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+        max-height: 0;
+        margin-top: 0;
+        overflow: hidden;
+        visibility: hidden;
+        transition: max-height 0.3s ease, margin-top 0.3s ease, visibility 0s 0.3s;
+    }
+
+    nav.active .content-nav {
+        max-height: 700px;       
+        margin-top: 20px;
+        visibility: visible;
+        transition: max-height 0.3s ease, margin-top 0.3s ease, visibility 0s;
+    }
+
+    nav .links ul {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+    }
+
+    nav .links ul li {
+        font-weight: 800;
+    }
+
+    nav .links ul li ul li {
+        font-weight: 300;
+    }
+
+    nav .links ul li ul.dropdown {
+        position: static;
+        min-width: 0;
+        padding: 0 0 0 14px;
+        background: transparent;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition: none;
+    }
+
+    nav .links ul li ul.dropdown::before {
+        display: none;
+    }
+
+    nav .links ul li ul.dropdown li a {
+        padding: 8px 15px;
+    }
+
+    nav .acount-buton-notLogin,
+    nav .acount {
+        align-self: flex-start;
+        margin: 0 0 8px 18px;  
+    }
+}
