@@ -168,7 +168,7 @@ body.black {
 }
 
 .data-preferences li p {
-    font-size: 18px;
+    font-size: 15px;
     margin: 0;
 }
 
@@ -262,14 +262,12 @@ body.black {
     }
 }
 
-/* Css Botao */
-
 .switch {
     position: relative;
     display: inline-block;
     flex-shrink: 0;
-    width: 70px;
-    height: 36px;
+    width: 64px;
+    height: 30px;
 }
 
 .switch input {
@@ -290,8 +288,8 @@ body.black {
 .slider::before {
     content: "";
     position: absolute;
-    width: 28px;
-    height: 28px;
+    width: 22px;
+    height: 22px;
     left: 4px;
     top: 4px;
     background: #fff;
@@ -350,17 +348,24 @@ input:focus-visible + .slider {
     border: solid 1px var(--cor-preto-suave);
     border-radius: 5px 0px 0px 5px;
     font-family: inherit;
+    color: #0000008e;
+}
+
+.buttons-avaliation {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 5px;
 }
 
 .avaliation-form button {
     color: var(--cor-primaria);
     border: solid 1px var(--cor-primaria);
     background-color: var(--cor-primaria-suave);
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 3px;
     cursor: pointer;
+    height: 100%;
+    width: 100%;
 }
-
-/* ---------- Responsivo ---------- */
 
 @media (max-width: 1000px) {
     .content {
@@ -400,7 +405,6 @@ input:focus-visible + .slider {
         padding-bottom: 18px;
     }
 
-    /* Botões Sair / Excluir ocupam a linha toda */
     .data-preferences[style] {
         flex-direction: column !important;
     }
@@ -419,7 +423,6 @@ input:focus-visible + .slider {
         width: 100%;
     }
 
-    /* Avaliação empilhada */
     .avaliation-form {
         grid-template-columns: minmax(0, 1fr);
     }

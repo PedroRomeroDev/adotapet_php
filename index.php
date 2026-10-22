@@ -1,5 +1,24 @@
 <?php
+    require_once("conexao.php");
     session_start();
+
+    function iniciais($nome) {
+    $partes = preg_split('/\s+/', trim($nome));
+    $primeira = mb_substr($partes[0], 0, 1);
+    $ultima = count($partes) > 1 ? mb_substr(end($partes), 0, 1) : '';
+    return mb_strtoupper($primeira . $ultima);
+    }
+
+    $SQL = "SELECT a.id_avaliacao, a.ds_comentario_avaliacao, u.nm_usuario 
+    FROM AVALIACAO AS a 
+    JOIN USUARIO u ON a.id_usuario_fk = u.id_usuario
+    ORDER BY a.dt_avaliacao DESC
+    LIMIT 4";
+
+    $stmt = $conn->prepare($SQL);
+    $stmt->execute();
+    $avaliacoes = $stmt->get_result();
+    
 ?>
 
 <!DOCTYPE html>
@@ -70,45 +89,17 @@
         </div>
 
         <div class="avaliations">
+            <?php  foreach($avaliacoes as $a): ?>
             <div class="card-avaliation">
                 <div class="card-header-avaliation">
-                    <img src="https://preview.redd.it/need-someone-to-help-me-with-freaky-vini-jr-photo-i-will-v0-zar03vm82wkd1.png?width=484&format=png&auto=webp&s=eee4664f17822596b7d1e419e3d01d63926dee6a">
-                    <P>Zé Felipe</P>
+                    <div class="card-avatar"><p><?php echo iniciais($a['nm_usuario']) ?></p></div>
+                    <P><?php echo $a['nm_usuario'] ?></P>
                 </div>
                 <div class="content-card-avaliation">
-                    <p>Achei Meu Gato Através Deste Portal! Obrigado! 😺</p>
+                    <p><?php echo $a['ds_comentario_avaliacao']; ?></p>
                 </div>
             </div>
-
-            <div class="card-avaliation">
-                <div class="card-header-avaliation">
-                    <img src="https://s2.glbimg.com/c1UZ516mc6YGgcsWOWZGdrKvAqI=/e.glbimg.com/og/ed/f/original/2018/10/22/mulher-confronta-negro.jpg">
-                    <P>Guilherme Campos</P>
-                </div>
-                <div class="content-card-avaliation">
-                    <p>Achei Meu Salsicha, Ele está a salvo! Obrigadoooo! 🌭</p>
-                </div>
-            </div>
-
-            <div class="card-avaliation">
-                <div class="card-header-avaliation">
-                    <img src="https://www.famousbirthdays.com/faces/douglassola-image.jpg">
-                    <P>Luan Henrique</P>
-                </div>
-                <div class="content-card-avaliation">
-                    <p>Achei Meu Frango Dinei Através Deste Portal! Vivaa 🐔</p>
-                </div>
-            </div>
-
-            <div class="card-avaliation">
-                <div class="card-header-avaliation">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQh088n5LmT_RsqEyD52tpdrYC_yb7kbNSujA&s">
-                    <P>Victor Luiz</P>
-                </div>
-                <div class="content-card-avaliation">
-                    <p>Meu Cachorro Voltou, Obrigado! 🐶</p>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </main>
     <footer>

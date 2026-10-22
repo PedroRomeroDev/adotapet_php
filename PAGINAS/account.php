@@ -56,8 +56,6 @@
                 $_SESSION['email_usuario'] = $email;
                 $_SESSION['nome_usuario'] = $nome;
 
-                echo "Atualizou Rapaz";
-
                 header("Location: " . $_SERVER['PHP_SELF']);
                 exit;
             } catch (mysqli_sql_exception $e) {
@@ -77,7 +75,7 @@
         $avaliacao = $avaliacao->fetch_assoc();
         $avaliacao = $avaliacao['ds_comentario_avaliacao'];
     } else {
-        $avaliacao = "Você não realizou nenhuma avaliação";
+        $avaliacao = "";
     }
 
     if($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['acao'] == "enviar_avaliacao"){
@@ -93,6 +91,13 @@
         $stmt->bind_param("si", $avaliacao, $resposta['id_usuario']);
 
         $stmt->execute();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['acao'] == "excluir_avaliacao"){
+        $SQL = "DELETE FROM AVALIACAO WHERE id_usuario_fk =" . $resposta['id_usuario'];
+        $stmt = $conn->prepare($SQL);
+        $stmt->execute();
+        header("Location: " . $_SERVER['PHP_SELF']);
     }
     
 ?>
@@ -157,8 +162,11 @@
                 <p>Escreva seu feedback sobre o portal</p>
             </div>
             <form action="#" class="avaliation-form" method="POST"> 
-                <textarea rows="2" cols="80"  maxlength="100" name="avaliacao" id="inputAvaliation"><?php echo $avaliacao; ?></textarea>
-                <button type="submit" name="acao" value="enviar_avaliacao">Enviar</button>
+                <textarea rows="2" cols="80" placeholder="Voce não realizou nenhuma avaliação ainda"  maxlength="100" name="avaliacao" id="inputAvaliation"><?php echo $avaliacao; ?></textarea>
+                <div class="buttons-avaliation">
+                    <button type="submit" name="acao" value="excluir_avaliacao">x</button>
+                    <button type="submit" name="acao" value="enviar_avaliacao">Enviar</button>
+                </div>
             </form>
         </section>
         <section class="extra-section">
