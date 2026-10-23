@@ -1,3 +1,25 @@
+<?php
+    require_once("../conexao.php");
+    session_start();
+
+    function iniciais($nome) {
+    $partes = preg_split('/\s+/', trim($nome));
+    $primeira = mb_substr($partes[0], 0, 1);
+    $ultima = count($partes) > 1 ? mb_substr(end($partes), 0, 1) : '';
+    return mb_strtoupper($primeira . $ultima);
+    }
+
+    $SQL = "SELECT a.id_avaliacao, a.ds_comentario_avaliacao, u.nm_usuario 
+    FROM AVALIACAO AS a 
+    JOIN USUARIO u ON a.id_usuario_fk = u.id_usuario
+    ORDER BY a.dt_avaliacao DESC
+    LIMIT 4";
+
+    $stmt = $conn->prepare($SQL);
+    $stmt->execute();
+    $avaliacoes = $stmt->get_result();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -15,7 +37,7 @@
     <body>
         <nav class="nav" id="navBar">
             <div class="logo">
-                <a href="/homepage.html"> 
+                <a href="../index.php"> 
                     <h1><span>Adota</span>Pet</h1>
                 </a>
                 <button class="menuBtn" id="menuBtn"><i class="bi bi-list"></i></button>
@@ -24,9 +46,9 @@
                 <div class="links">
                 <ul>
                     <li>
-                        <a href="#">Sobre</a>
+                        <a href="/pages/sobre.html">Sobre</a>
                         <ul class="dropdown">
-                            <li><a href="/pages/sobre.html">Sobre o Portal</a></li>
+                            <li><a href="PAGINAS/sobre.php">Sobre o Portal</a></li>
                             <li><a href="/pages/blog.html">Blog</a></li>
                             <li><a href="/pages/sobre.html#avaliacoes">Avaliações</a></li>
                         </ul>
@@ -41,13 +63,17 @@
                     <li>
                         <a href="#">Adoção</a>
                         <ul class="dropdown">
-                            <li><a href="/pages/area_adocao.html">Área de Adoção</a></li>
+                            <li><a href="PAGINAS/area_adocao.html">Área de Adoção</a></li>
                             <li><a href="/pages/ongs.html">ONG's</a></li>
                         </ul>
                     </li>
+                    <?php
+                    echo isset($_SESSION['email_usuario'])
+                        ? "<a class='acount' href='account.php'>Olá, " . strtok($_SESSION['nome_usuario'], " ") . "</a>"
+                        : "<a class='acount-buton-notLogin' href='login.php'>Entrar</a>";
+                    ?>
                 </ul>
             </div>
-            <a class="acount-buton-notLogin" href="/pages/loginUsuario.html">Entrar</a>
             </div>
         </nav>
 
@@ -62,7 +88,6 @@
             </div>
             <div class="hero-logo">
                 <img src="https://imgs.search.brave.com/hNVbpmH1AlZwTvX0sEUbir7hRIYzPxicbKLXYPL2Ipg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3RpL2ZvdG9z/LWdyYXRpcy90Mi8y/NDYzNzUyNS1jYWNo/b3Jyby1kZW50cm8t/cmVhbC12aWRhLWZl/bGl6LW1vbWVudG8t/Y29tLWFuaW1hbC1h/aS1nZW5lcmF0aXZv/LWdyYXRpcy1mb3Rv/LmpwZw" alt="Logo AdotaPet">
-                <span><b>Adota</b>Pet</span>
             </div>
         </div>
     </section>
@@ -133,53 +158,19 @@
             </div>
 
             <div class="reviews-cards-container">
+                <?php foreach($avaliacoes as $a): ?>
                 <article class="review-card">
                     <div class="review-card-header">
-                        <div class="avatar" aria-hidden="true">ZF</div>
+                        <div class="avatar" aria-hidden="true"><?php echo iniciais($a['nm_usuario']) ?></div>
                         <div class="card-header-text">
-                            <p>Zé Felipe</p>
+                            <p><?php echo $a['nm_usuario'] ?></p>
                         </div>
                     </div>
                     <div class="review-content-card">
-                        <p>Achei meu gato através deste portal! Obrigado! 😺</p>
+                        <p><?php echo $a['ds_comentario_avaliacao'] ?></p>
                     </div>
                 </article>
-
-                <article class="review-card">
-                    <div class="review-card-header">
-                        <div class="avatar" aria-hidden="true">GC</div>
-                        <div class="card-header-text">
-                            <p>Guilherme Campos</p>
-                        </div>
-                    </div>
-                    <div class="review-content-card">
-                        <p>Achei meu salsicha, ele está a salvo! Obrigadoooo! 🌭</p>
-                    </div>
-                </article>
-
-                <article class="review-card">
-                    <div class="review-card-header">
-                        <div class="avatar" aria-hidden="true">LH</div>
-                        <div class="card-header-text">
-                            <p>Luan Henrique</p>
-                        </div>
-                    </div>
-                    <div class="review-content-card">
-                        <p>Achei meu frango Dinei através deste portal! Vivaa 🐔</p>
-                    </div>
-                </article>
-
-                <article class="review-card">
-                    <div class="review-card-header">
-                        <div class="avatar" aria-hidden="true">VL</div>
-                        <div class="card-header-text">
-                            <p>Victor Luiz</p>
-                        </div>
-                    </div>
-                    <div class="review-content-card">
-                        <p>Meu cachorro voltou, obrigado! 🐶</p>
-                    </div>
-                </article>
+                <?php endforeach; ?>
             </div>
 
         </div>

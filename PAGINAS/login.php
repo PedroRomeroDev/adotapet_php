@@ -72,7 +72,10 @@
                     <div class="input-container"><input type="password" placeholder="Senha" id="senha-login" name="senha-usuario" required></div>
                     <a href="#">Esqueci Minha Senha</a>
                     <button type="submit" >Entrar</button>
-                    <p class="link-cadastro">Não tem uma conta? <a href="cadastro.php">Cadastre-se</a></p>
+                    <div class="links">
+                        <p class="link-cadastro">Não tem uma conta? <a href="cadastro.php">Cadastre-se</a></p>
+                        <p class="link-cadastro">É uma ONG? <a href="cadastro_ong.php">Cadastre Sua Organização</a></p>
+                    </div>
                 </form>
             </div>
         </div>

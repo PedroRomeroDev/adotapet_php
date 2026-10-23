@@ -65,7 +65,10 @@
                     <div class="input-container"><input type="email" placeholder="Email" id="email-cadastro" name="email-cadastro" required></div>
                     <div class="input-container"><input type="password" placeholder="Senha" id="senha-cadastro" name="senha-cadastro" required></div>
                     <button type="submit">Cadastrar</button>
-                    <p class="link-login">Já tem uma conta? <a href="login.php">Entrar</a></p>
+                    <div>
+                        <p class="link-login">Já tem uma conta? <a href="login.php">Entrar</a></p>
+                        <p class="link-login">É uma ONG? <a href="cadastro_ong.php">Cadastre Sua Organização</a></p>
+                    </div>
                 </form>
             </div>
         </div>
