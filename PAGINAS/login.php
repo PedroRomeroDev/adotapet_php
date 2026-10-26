@@ -49,37 +49,69 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdotaPet - Login</title>
-    <link rel="stylesheet" href="../CSS/login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../CSS/variaveis.css">
-    <link rel="shortcut icon" href="../assets/all_images/vazado.png">
+    <link rel="stylesheet" href="../CSS/login.css?v=<?php echo filemtime(__DIR__ . '/../CSS/login.css'); ?>">
+    <link rel="shortcut icon" href="../assets/all_images/branco vazado.png">
 </head>
+
 <body>
-    <div class="container-form">
+    <main class="container-form">
         <div class="login" id="login">
-            <div class="first-column">
-                <h2>Olá</h2>
-                <p>Entre na sua conta</p>
-                <p>Participe da comunidade AdotaPet</p>
-            </div>
-            <div class="second-column">
+
+            <aside class="first-column">
+                <div class="first-column-content">
+                    <h2>Olá</h2>
+                    <p>Entre na sua conta.</p>
+                    <p>Participe da comunidade AdotaPet.</p>
+                </div>
+            </aside>
+
+            <section class="second-column">
                 <form id="form-login" action="#" method="POST">
-                    <h2>Login</h2>
-                    <div class="input-container"><input type="email" placeholder="Email" id="email-login" name="email_usuario" required></div>
-                    <div class="input-container"><input type="password" placeholder="Senha" id="senha-login" name="senha-usuario" required></div>
-                    <a href="#">Esqueci Minha Senha</a>
-                    <button type="submit" >Entrar</button>
+                    <header class="form-header">
+                        <h1>Login</h1>
+                        <p>Entre para continuar na sua conta.</p>
+                    </header>
+
+                    <div class="campos">
+                        <div class="input-container">
+                            <label for="email-login">E-mail</label>
+                            <input type="email" id="email-login" name="email_usuario" placeholder="seu@email.com"
+                                autocomplete="email" required>
+                        </div>
+
+                        <div class="input-container">
+                            <label for="senha-login">Senha</label>
+                            <input type="password" id="senha-login" name="senha-usuario" placeholder="Sua senha"
+                                autocomplete="current-password" required>
+                            <a class="link-esqueci" href="#">Esqueci minha senha</a>
+                        </div>
+                    </div>
+
+                    <button type="submit">Entrar</button>
+
                     <div class="links">
-                        <p class="link-cadastro">Não tem uma conta? <a href="cadastro.php">Cadastre-se</a></p>
-                        <p class="link-cadastro">É uma ONG? <a href="cadastro_ong.php">Cadastre Sua Organização</a></p>
+                        <p class="link-cadastro">
+                            Não tem uma conta? <a href="cadastro.php">Cadastre-se</a>
+                        </p>
+                        <p class="link-cadastro">
+                            É uma ONG? <a href="cadastro_ong.php">Cadastre sua organização</a>
+                        </p>
                     </div>
                 </form>
-            </div>
+            </section>
+
         </div>
-    </div>
+    </main>
     <script src="/script/loginScript.js"></script>
 </body>
+
 </html>

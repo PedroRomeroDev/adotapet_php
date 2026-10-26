@@ -41,38 +41,81 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdotaPet - Cadastro</title>
-    <link rel="stylesheet" href="../CSS/cadastro.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../CSS/variaveis.css">
+    <link rel="stylesheet" href="../CSS/cadastro.css?v=<?php echo filemtime(__DIR__ . '/../CSS/cadastro.css'); ?>">
     <link rel="shortcut icon" href="../assets/all_images/vazado.png">
 </head>
+
 <body>
-    <div class="container-form">
+    <main class="container-form">
         <div class="cadastro" id="cadastro">
-            <div class="first-column">
-                <h2>Bem Vindo</h2>
-                <p>Crie sua conta gratuitamente</p>
-                <p>Participe da comunidade AdotaPet</p>
-            </div>
-            <div class="second-column">
+
+            <aside class="first-column">
+                <div class="first-column-content">
+                    <h2>Bem-vindo</h2>
+                    <p>Crie sua conta gratuitamente.</p>
+                    <p>Participe da comunidade AdotaPet.</p>
+                </div>
+            </aside>
+
+            <section class="second-column">
                 <form id="form-cadastro" method="POST" action="#">
-                    <h2>Cadastro</h2>
-                    <div class="input-container"><input type="text" placeholder="Nome" id="nome-cadastro" name="nome-cadastro" required></div>
-                    <div class="input-container"><input type="tel" placeholder="Telefone" id="telefone-cadastro" name="telefone-cadastro" required></div>
-                    <div class="input-container"><input type="email" placeholder="Email" id="email-cadastro" name="email-cadastro" required></div>
-                    <div class="input-container"><input type="password" placeholder="Senha" id="senha-cadastro" name="senha-cadastro" required></div>
+                    <header class="form-header">
+                        <h1>Cadastro</h1>
+                        <p>Crie sua conta para adotar e acompanhar seus pets.</p>
+                    </header>
+
+                    <div class="form-section">
+                        <h3>Seus dados</h3>
+
+                        <div class="input-container full">
+                            <label for="nome-cadastro">Nome</label>
+                            <input type="text" id="nome-cadastro" name="nome-cadastro" placeholder="Nome completo"
+                                maxlength="200" autocomplete="name" required>
+                        </div>
+
+                        <div class="input-container">
+                            <label for="telefone-cadastro">Telefone</label>
+                            <input type="tel" id="telefone-cadastro" name="telefone-cadastro"
+                                placeholder="(00) 00000-0000" maxlength="20" autocomplete="tel" required>
+                        </div>
+
+                        <div class="input-container">
+                            <label for="email-cadastro">E-mail</label>
+                            <input type="email" id="email-cadastro" name="email-cadastro"
+                                placeholder="seu@email.com" maxlength="200" autocomplete="email" required>
+                        </div>
+
+                        <div class="input-container full">
+                            <label for="senha-cadastro">Senha</label>
+                            <input type="password" id="senha-cadastro" name="senha-cadastro"
+                                placeholder="Crie uma senha" autocomplete="new-password" required>
+                        </div>
+                    </div>
+
                     <button type="submit">Cadastrar</button>
-                    <div>
-                        <p class="link-login">Já tem uma conta? <a href="login.php">Entrar</a></p>
-                        <p class="link-login">É uma ONG? <a href="cadastro_ong.php">Cadastre Sua Organização</a></p>
+
+                    <div class="links">
+                        <p class="link-login">
+                            Já tem uma conta? <a href="login.php">Entrar</a>
+                        </p>
+                        <p class="link-login">
+                            É uma ONG? <a href="cadastro_ong.php">Cadastre sua organização</a>
+                        </p>
                     </div>
                 </form>
-            </div>
+            </section>
+
         </div>
-    </div>
-    <script src="/script/cadastroScript.js"></script>
+    </main>
 </body>
+
 </html>
