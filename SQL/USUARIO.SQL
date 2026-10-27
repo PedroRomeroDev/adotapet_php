@@ -8,5 +8,6 @@ CREATE TABLE USUARIO (
     nm_cidade_usuario     VARCHAR(100),
     sg_estado_usuario     CHAR(2),
     dt_nascimento_usuario DATE,
-    dt_cadastro           DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    dt_cadastro           DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    ds_imagem_perfil_ong VARCHAR(255)
 );

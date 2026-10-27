@@ -9,5 +9,6 @@ CREATE TABLE ONG (
     nm_cidade_ong VARCHAR(100) NOT NULL, 
     sg_estado_ong CHAR(2) NOT NULL,
     dt_aprovacao_ong DATE,
-    ic_ativo_ong boolean DEFAULT FALSE
+    ic_ativo_ong boolean DEFAULT FALSE,
+    ds_imagem_perfil_ong VARCHAR(255)
 );

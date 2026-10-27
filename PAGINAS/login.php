@@ -1,49 +1,63 @@
 <?php
-
     session_start();
 
-    // Importando Conexao PHP
     require_once("../conexao.php");
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
-        $email_usuario    = $_POST["email_usuario"];
-        $senha_usuario    = $_POST["senha-usuario"];
+        $email = $_POST["email_usuario"];
+        $senha = $_POST["senha-usuario"];
 
-        if(empty($email_usuario) || empty($senha_usuario)){
+        if(empty($email) || empty($senha)){
             die("Dados Invalidos");
         }
 
-        if(!filter_var($email_usuario, FILTER_VALIDATE_EMAIL)){
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             die("Email Invalido");
         }
 
-        // Select no Banco de Dados
-        $SQL = "SELECT * FROM USUARIO WHERE cd_email_usuario = ?";
-
-        // Preparando a Query
-        $stmt = $conn->prepare($SQL);
-
-        $stmt->bind_param("s", $email_usuario);
-
-        // Executando Consulta
+        $stmt = $conn->prepare("SELECT * FROM USUARIO WHERE cd_email_usuario = ?");
+        $stmt->bind_param("s", $email);
         $stmt->execute();
+        $res = $stmt->get_result();
 
-        $resposta = $stmt->get_result();
+        if($res->num_rows > 0){
+            $user = $res->fetch_assoc();
 
-        if($resposta->num_rows > 0){
-            $resposta = $resposta->fetch_assoc();
-           
-            if($resposta['cd_senha_usuario'] == $senha_usuario) {
-                 $_SESSION['email_usuario'] = $resposta['cd_email_usuario'];
-                 $_SESSION['nome_usuario'] = $resposta['nm_usuario'];
+            if($user['cd_senha_usuario'] == $senha){
+                session_regenerate_id(true);
+                $_SESSION['tipo_conta']    = 'usuario';
+                $_SESSION['email_usuario'] = $user['cd_email_usuario'];
+                $_SESSION['nome_usuario']  = $user['nm_usuario'];
                 header('Location: ../index.php');
-            } else {
-                echo "Senha Incorreta";
+                exit;
             }
-        } else {
-            echo "Email Nao Cadastrado!";
+            die("Senha Incorreta");
         }
+
+        $stmt = $conn->prepare("SELECT * FROM ONG WHERE cd_email_ong = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        if($res->num_rows > 0){
+            $ong = $res->fetch_assoc();
+
+            if($ong['cd_senha_ong'] == $senha){
+                session_regenerate_id(true);
+                $_SESSION['tipo_conta']   = 'ong';
+                $_SESSION['cnpj_ong']     = $ong['cd_cnpj_ong'];
+                $_SESSION['email_ong']    = $ong['cd_email_ong'];
+                $_SESSION['nome_ong']     = $ong['nm_ong'];
+                $_SESSION['nome_usuario'] = $ong['nm_ong'];
+                header('Location: ../index.php');
+                exit;
+            }
+            die("Senha Incorreta");
+        }
+
+        echo "Email Nao Cadastrado!";
     }
+
 ?>
 
 

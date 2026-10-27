@@ -29,7 +29,6 @@ body {
 .container-form .login .first-column {
     position: relative;
     display: flex;
-    align-items: center;
     justify-content: center;
     padding: 40px 32px;
     color: #fff;
@@ -55,6 +54,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-top: 90px;
 }
 
 .container-form .login .first-column h2 {

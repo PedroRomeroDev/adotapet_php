@@ -88,7 +88,6 @@
 <body>
     <main class="container-form">
         <div class="cadastro" id="cadastro">
-
             <aside class="first-column">
                 <div class="first-column-content">
                     <h2>Bem-vindo</h2>

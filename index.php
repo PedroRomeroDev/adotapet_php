@@ -70,9 +70,17 @@
                     </ul>
                 </li>
                 <?php
-                echo isset($_SESSION['email_usuario'])
-                    ? "<a class='acount' href='PAGINAS/account.php'>Olá, " . strtok($_SESSION['nome_usuario'], " ") . "</a>"
-                    : "<a class='acount-buton-notLogin' href='PAGINAS/login.php'>Entrar</a>";
+                    if (isset($_SESSION['tipo_conta'])) {
+                        $primeiroNome = htmlspecialchars(strtok($_SESSION['nome_usuario'], " "));
+
+                        if ($_SESSION['tipo_conta'] === 'ong') {
+                            echo "<a class='acount' href='PAGINAS/account_ong.php'>Olá, " . $primeiroNome . "</a>";
+                        } else {
+                            echo "<a class='acount' href='PAGINAS/account.php'>Olá, " . $primeiroNome . "</a>";
+                        }
+                    } else {
+                        echo "<a class='acount-buton-notLogin' href='PAGINAS/login.php'>Entrar</a>";
+                    }
                 ?>
             </ul>
         </div>
