@@ -64,3 +64,49 @@
 button {
     font-family: var(--fonte-botoes);
 }
+
+/* Variaveis de Admin */
+
+:root {
+    /* Superfícies */
+    --a-fundo: var(--sobre-fundo);
+    --a-card: #fff;
+    --a-lateral: #fff;
+    --a-linha: color-mix(in srgb, var(--cor-primaria) 14%, #e6e9e8);
+    --a-hover: var(--sobre-menta);
+
+    /* Texto */
+    --a-texto: var(--sobre-texto);
+    --a-suave: var(--sobre-texto-suave);
+
+    /* Sombra e raios */
+    --a-sombra: 0 1px 2px rgba(20, 40, 32, .05);
+    --a-raio: 14px;
+    --a-raio-sm: 10px;
+
+    /* Cores semânticas (usadas via --c) */
+    --a-azul: #3b7dd8;
+    --a-vermelho: var(--danger-border, #a10000);
+    --a-verde: var(--cor-primaria);
+    --a-ambar: #c98600;
+    --a-laranja: #e8772e;
+
+    --a-foco: 0 0 0 3px color-mix(in srgb, var(--cor-primaria) 28%, transparent);
+}
+
+[data-theme="dark"] {
+    --a-fundo: #0e1311;
+    --a-card: #151c19;
+    --a-lateral: #121815;
+    --a-linha: #243029;
+    --a-hover: color-mix(in srgb, var(--cor-primaria) 14%, #151c19);
+    --a-texto: #e6ece9;
+    --a-suave: #8f9d97;
+    --a-sombra: none;
+
+    --a-azul: #6fa3ec;
+    --a-vermelho: #ef6b6a;
+    --a-verde: #4fb592;
+    --a-ambar: #f0b43c;
+    --a-laranja: #f2955a;
+}
