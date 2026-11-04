@@ -154,6 +154,7 @@ nav .links ul li ul.dropdown li a:hover {
 nav .links a.acount,
 nav .links a.acount-buton-notLogin {
     display: inline-flex;
+    gap: 5px;
     align-items: center;
     justify-content: center;
     min-width: 100px;

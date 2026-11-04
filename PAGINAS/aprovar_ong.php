@@ -2,7 +2,7 @@
     require_once("../conexao.php");
 
     $id = $_GET['id'];
-    $SQL = "UPDATE ONG SET ic_ativo_ong = 1 WHERE cd_ong = ?";
+    $SQL = "UPDATE ONG SET ic_ativo_ong = 1, dt_aprovacao_ong = NOW() WHERE cd_ong = ?";
     $stmt = $conn->prepare($SQL);
     $stmt->bind_param("i", $id);
     $stmt->execute();

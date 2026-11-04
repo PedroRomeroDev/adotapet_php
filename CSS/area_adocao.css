@@ -1,153 +1,734 @@
-.first-container{
-    display: grid;
-    grid-template-columns: 39% 59%;
-    width: 100%;
-    gap: 2%;
-    margin-bottom: 30px;
+main {
+    background: var(--a-fundo);
+    color: var(--a-texto);
+    min-height: 100vh;
+    padding-bottom: 4rem;
 }
 
-.adopteds-container{
-    flex: 1 1 320px;
+main h2,
+main h3,
+.modal h1 {
+    font-family: var(--fonte-titulo);
+    font-weight: 400;
+    letter-spacing: .2px;
+}
+
+
+.first-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 1rem;
+    display: grid;
+    grid-template-columns: minmax(280px, 380px) 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+}
+
+.adopteds-container {
+    position: relative;
+    overflow: hidden;
+    background: var(--cor-primaria);
+    color: #fff;
+    border-radius: calc(var(--sobre-raio) + 4px);
+    padding: 1.75rem 1.75rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
-    padding: 30px;
-    border-radius: 10px;
-    min-width: 280px;
+    gap: 1rem;
+    box-shadow: 0 14px 30px -18px color-mix(in srgb, var(--cor-primaria) 80%, black);
 }
 
-.adopteds-container img{
-    width: 100%;
-    max-width: 180px;
+.adopteds-container::before {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    right: -90px;
+    top: -90px;
+    border-radius: 50%;
+    background: color-mix(in srgb, #fff 10%, transparent);
+    pointer-events: none;
+}
+
+.adopteds-container h2 {
+    position: relative;
+    font-size: 1.6rem;
+    color: #fff;
+}
+
+.row-div {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.row-div img {
+    width: 110px;
     height: auto;
-}
-.card .ong {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.card img {
-    width: 40px;
-    object-fit: cover;
+    flex-shrink: 0;
 }
 
-.adopteds-container .row-div{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 20px;
-    font-size: 30px;
+.row-div h3 {
+    font-size: 1.5rem;
+    line-height: 1.1;
+    color: #fff;
+}
+
+.row-div h3 span {
+    display: block;
+    font-size: 3.4rem;
+    line-height: 1;
+}
+
+.balloon-adopteds {
+    position: relative;
+    margin-top: auto;
+    background: #fff;
+    color: var(--sobre-verde-escuro);
+    border-radius: var(--sobre-raio);
+    padding: .85rem 1.1rem;
+    text-align: center;
+    font-size: .95rem;
+}
+
+.balloon-adopteds::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 2.25rem;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    transform: rotate(45deg);
+    border-radius: 3px;
+}
+
+.balloon-adopteds p {
+    position: relative;
+}
+
+.balloon-adopteds span {
+    font-weight: 700;
     color: var(--cor-primaria);
+}
+
+.how-works-container {
+    background: var(--a-card);
+    border: 1px solid var(--a-linha);
+    border-radius: calc(var(--sobre-raio) + 4px);
+    box-shadow: var(--a-sombra);
+    padding: 2rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.how-works-container h2 {
+    font-size: 1.75rem;
+    color: var(--cor-primaria);
+}
+
+.how-works-container p {
+    color: var(--a-suave);
+    line-height: 1.7;
+    font-size: 1rem;
+    max-width: 68ch;
+}
+
+.btn-conferir {
+    margin-top: .5rem;
+    background: var(--cor-primaria);
+    color: #fff;
+    border: 2px solid var(--cor-primaria);
+    border-radius: 999px;
+    padding: .7rem 1.8rem;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .15s ease;
+}
+
+.btn-conferir:hover {
+    background: transparent;
+    color: var(--cor-primaria);
+}
+
+.btn-conferir:active {
+    transform: scale(.97);
+}
+
+.pets-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 0;
+    scroll-margin-top: 90px;
+}
+
+.pets-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     flex-wrap: wrap;
-    text-align: center;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
 }
 
-.adopteds-container .balloon-adopteds{
-    border-radius: 50px;
-    border: 0.5px solid rgba(126, 200, 179, 0.5);
+.pets-header h2 {
+    font-size: 1.9rem;
+    color: var(--a-texto);
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+
+.pets-header h2 i {
     color: var(--cor-primaria);
+    font-size: 1.4rem;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    width: min(100%, 340px);
+    background: var(--a-card);
+    border: 1.5px solid var(--a-linha);
+    border-radius: 999px;
+    padding: .25rem .25rem .25rem 1.1rem;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.search-box:focus-within {
+    border-color: var(--cor-primaria);
+    box-shadow: var(--a-foco);
+}
+
+.search-box input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--a-texto);
+    font-size: .95rem;
+    padding: .5rem 0;
+}
+
+.search-box input::placeholder {
+    color: var(--a-suave);
+}
+
+.search-box button {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: var(--cor-primaria);
+    color: #fff;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: background .2s ease, transform .15s ease;
+}
+
+.search-box button:hover {
+    background: var(--sobre-verde-escuro);
+}
+
+.search-box button:active {
+    transform: scale(.92);
+}
+
+.pets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.pet-card {
+    background: var(--a-card);
+    border: 1px solid var(--a-linha);
+    border-radius: var(--sobre-raio);
+    box-shadow: var(--a-sombra);
+    padding: .75rem .75rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .85rem;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.pet-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--sobre-menta-borda);
+    box-shadow: 0 16px 28px -20px color-mix(in srgb, var(--cor-primaria) 70%, black);
+}
+
+.pet-top {
+    position: relative;
+    border-radius: calc(var(--sobre-raio) - 6px);
+    overflow: hidden;
+    aspect-ratio: 4 / 3.4;
+    background: var(--sobre-menta);
+}
+
+.pet-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .4s ease;
+}
+
+.pet-card:hover .pet-photo {
+    transform: scale(1.05);
+}
+
+.pet-name {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 2.2rem 1rem .75rem;
+    font-size: 1.35rem;
+    color: #fff;
+    background: linear-gradient(to top, rgba(0, 0, 0, .6), transparent);
+}
+
+.pet-since {
+    padding: 0 .35rem;
+    font-size: .85rem;
+    line-height: 1.45;
+    color: var(--a-suave);
+}
+
+.pet-ong {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    margin: 0 .35rem;
+    padding: .5rem .75rem .5rem .5rem;
     width: fit-content;
-    max-width: 100%;
-    padding: 10px 20px;
-    text-align: center;
+    max-width: calc(100% - .7rem);
+    background: var(--sobre-menta);
+    border: 1px solid var(--sobre-menta-borda);
+    border-radius: 999px;
+    font-size: .85rem;
+    font-weight: 500;
+    color: var(--sobre-verde-escuro);
+}
+
+.ong-avatar {
+    position: relative;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--cor-primaria);
+    display: grid;
+    place-items: center;
+}
+
+/* iniciais aparecem quando a imagem falha (onerror remove o <img>) */
+.ong-avatar::before {
+    content: attr(data-ini);
+    color: #fff;
+    font-family: var(--fonte-botoes);
+    font-size: .65rem;
     font-weight: 600;
 }
 
-.how-works-container{
+.ong-avatar img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #fff;
+}
+
+.btn-ver-mais {
+    margin: auto .35rem 0;
+    background: transparent;
+    color: var(--cor-primaria);
+    border: 2px solid var(--cor-primaria);
+    border-radius: 999px;
+    padding: .6rem 1rem;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .15s ease;
+}
+
+.btn-ver-mais:hover {
+    background: var(--cor-primaria);
+    color: #fff;
+}
+
+.btn-ver-mais:active {
+    transform: scale(.97);
+}
+
+.pets-vazio {
+    margin-top: 1.5rem;
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--a-suave);
+    background: var(--a-card);
+    border: 1.5px dashed var(--sobre-menta-borda);
+    border-radius: var(--sobre-raio);
+}
+
+.pets-vazio[hidden] {
+    display: none;
+}
+
+.overlay-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgba(10, 20, 16, .55);
+    backdrop-filter: blur(4px);
+}
+
+.overlay-modal.active {
+    display: flex;
+    animation: modal-fade .2s ease-out both;
+}
+
+.modal {
+    position: relative;
+    width: min(100%, 860px);
+    background: var(--a-card);
+    color: var(--a-texto);
+    border-radius: calc(var(--sobre-raio) + 8px);
+    overflow: hidden;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .45);
+    animation: modal-up .25s ease-out both;
+}
+
+.modal-close {
+    position: absolute;
+    top: .85rem;
+    right: .85rem;
+    z-index: 3;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .92);
+    color: var(--sobre-verde-escuro);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+    transition: background .2s ease, color .2s ease, transform .15s ease;
+}
+
+.modal-close:hover {
+    background: var(--cor-primaria);
+    color: #fff;
+}
+
+.modal-close:active {
+    transform: scale(.92);
+}
+
+.modal-close:focus-visible {
+    outline: none;
+    box-shadow: var(--a-foco);
+}
+
+.modal-corpo {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    max-height: calc(100dvh - 2.5rem);
+    overflow-y: auto;
+}
+
+.animal-img-container {
+    position: relative;
+    min-height: 400px;
+    background: var(--sobre-menta);
+}
+
+.animal-img-container img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.about-animal {
+    padding: 2.5rem 2.25rem 2.25rem;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
-    padding: 30px;
-    border-radius: 10px;
-    min-width: 280px;
+    gap: 1.15rem;
 }
 
-.how-works-container p{
-    width: 100%;
-    text-align: justify;
-    line-height: 1.5;
+.modal-ong {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding-right: 2.75rem;
+    padding-bottom: 1.1rem;
+    border-bottom: 1px solid var(--a-linha);
 }
 
-.btn-conferir{
-    background-color: var(--cor-primaria);
-    color: #ffffff;
-    border: none;
-    padding: 10px 15px;
-    min-width: 120px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 700;
+.modal-ong .ong-avatar {
+    width: 42px;
+    height: 42px;
+}
+
+.modal-ong .ong-avatar::before {
+    font-size: .75rem;
+}
+
+.modal-ong div {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.3;
+}
+
+.modal-ong small {
+    font-size: .75rem;
+    color: var(--a-suave);
+}
+
+.modal-ong strong {
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--a-texto);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.about-animal h1 {
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    line-height: 1.1;
+    color: var(--cor-primaria);
+    word-break: break-word;
+}
+
+.about-animal>p {
+    color: var(--a-suave);
+    line-height: 1.65;
+}
+
+/* Características (sexo, idade...) */
+.container-balloons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+}
+
+.balao {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    min-height: 36px;
+    padding: .35rem .95rem;
+    background: var(--sobre-menta);
+    border: 1px solid var(--sobre-menta-borda);
+    border-radius: 999px;
+    color: var(--sobre-verde-escuro);
+    font-size: .88rem;
+    font-weight: 500;
+}
+
+.balao i {
+    color: var(--cor-primaria);
+    font-size: .95rem;
+}
+
+/* Variação de aviso (ex.: Alérgico) */
+.balao--aviso {
+    background: color-mix(in srgb, var(--cor-aviso) 14%, white);
+    border-color: color-mix(in srgb, var(--cor-aviso) 45%, white);
+    color: color-mix(in srgb, var(--cor-aviso) 55%, black);
+}
+
+.balao--aviso i {
+    color: inherit;
+}
+
+[data-theme="dark"] .balao--aviso {
+    background: color-mix(in srgb, var(--cor-aviso) 16%, var(--a-card));
+    border-color: color-mix(in srgb, var(--cor-aviso) 40%, var(--a-card));
+    color: var(--cor-aviso);
+}
+
+.modal-desde {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .88rem;
+    color: var(--a-suave);
+}
+
+.modal-desde i {
+    color: var(--cor-primaria);
+}
+
+/* Botão principal (agora um <a>) */
+.btn-adotar {
     margin-top: auto;
-    align-self: flex-end;
-    transition: 0.3s;
-}
-
-.btn-conferir a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    padding: .9rem 1.5rem;
+    background: var(--cor-primaria);
+    border: 2px solid var(--cor-primaria);
+    border-radius: 999px;
+    color: #fff;
+    font-family: var(--fonte-botoes);
+    font-size: 1rem;
+    font-weight: 600;
     text-decoration: none;
-    color: inherit;
+    cursor: pointer;
+    transition: background .2s ease, border-color .2s ease, transform .15s ease;
 }
 
-.btn-conferir:hover{
-    opacity: 0.9;
+.btn-adotar:hover {
+    background: var(--sobre-verde-escuro);
+    border-color: var(--sobre-verde-escuro);
 }
 
-
-.adopted-animals-container{
-    width: 100%;
-    margin: 20px 0px;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
+.btn-adotar:active {
+    transform: scale(.98);
 }
 
-button a{
-    text-decoration: none;
-    color: inherit;
+.btn-adotar:focus-visible {
+    outline: none;
+    box-shadow: var(--a-foco);
 }
 
-.adopted-animals-container {
-    height: 700px;
-    margin-bottom: 50px;
-    overflow-y: scroll;
+@keyframes modal-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
-@media (max-width: 1200px){
+@keyframes modal-up {
+    from { opacity: 0; transform: translateY(16px) scale(.98); }
+    to   { opacity: 1; transform: none; }
+}
+
+.btn-conferir:focus-visible,
+.btn-ver-mais:focus-visible,
+.search-box button:focus-visible {
+    outline: none;
+    box-shadow: var(--a-foco);
+}
+
+@media (max-width: 960px) {
     .first-container {
         grid-template-columns: 1fr;
+        padding-top: 2rem;
+    }
+
+    .how-works-container {
+        padding: 1.75rem;
     }
 }
 
-@media (max-width: 900px) {
-    .first-container {
+@media (max-width: 720px) {
+    .overlay-modal {
+        padding: 1rem;
+    }
+
+    .modal-corpo {
+        grid-template-columns: 1fr;
+        max-height: calc(100dvh - 2rem);
+    }
+
+    .animal-img-container {
+        min-height: 0;
+        height: 250px;
+    }
+
+    .about-animal {
+        padding: 1.5rem 1.5rem 1.75rem;
+    }
+
+    /* o X fica sobre a foto, então a ONG não precisa reservar espaço */
+    .modal-ong {
+        padding-right: 0;
+    }
+
+    .btn-adotar {
+        margin-top: .5rem;
+    }
+}
+
+@media (max-width: 560px) {
+    .first-container,
+    .pets-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .adopteds-container {
+        padding: 1.4rem 1.25rem;
+    }
+
+    .row-div img {
+        width: 90px;
+    }
+
+    .row-div h3 span {
+        font-size: 2.8rem;
+    }
+
+    .pets-header {
         flex-direction: column;
-        align-items: center;
-        gap: 20px;
+        align-items: stretch;
     }
 
-    .adopteds-container, 
-    .how-works-container {
-        width: 85%;
-    }
-}
-@media (max-width: 768px) {
-    .adopteds-container, 
-    .how-works-container {
-        width: 95%;
-        padding: 20px;
-        margin: 0 auto;
+    .pets-header h2 {
+        font-size: 1.6rem;
     }
 
-    .adopteds-container .balloon-adopteds {
+    .search-box {
         width: 100%;
     }
 
-    .how-works-container p {
-        width: 100%; 
+    .pets-grid {
+        grid-template-columns: 1fr;
+        gap: 1.1rem;
     }
 
-    .adopted-animals-container {
-        padding: 25px 10px;
+    .pet-top {
+        aspect-ratio: 16 / 11;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pet-card,
+    .pet-photo,
+    .btn-conferir,
+    .btn-ver-mais,
+    .btn-adotar,
+    .modal-close,
+    .search-box button,
+    .modal,
+    .overlay-modal {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .pet-card:hover,
+    .pet-card:hover .pet-photo {
+        transform: none;
     }
 }

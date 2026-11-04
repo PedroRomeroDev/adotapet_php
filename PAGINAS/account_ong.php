@@ -4,7 +4,7 @@ session_start();
 
 require_once("../conexao.php");
 
-// ATENÇÃO: ajuste o nome da variável de sessão e a página de login conforme o login da sua ONG
+
 if (empty($_SESSION['email_ong'])) {
     header("Location: login.php");
     exit;
@@ -424,121 +424,7 @@ $cnpjExibicao = strlen($cnpj) === 14
     <title>Olá, <?php echo e($primeiroNome); ?></title>
     <link rel="shortcut icon" href="../assets/all_images/branco vazado.png">
     <link rel="stylesheet" href="../CSS/variaveis.css">
-    <link rel="stylesheet" href="../CSS/account.css">
-    <style>
-        /* Área de upload da foto do pet */
-        .dropzone-input {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .dropzone {
-            display: block;
-            cursor: pointer;
-            border: 2px dashed color-mix(in srgb, currentColor 25%, transparent);
-            border-radius: 14px;
-            background: color-mix(in srgb, currentColor 3%, transparent);
-            transition: border-color .2s ease, background .2s ease, transform .2s ease;
-        }
-
-        .dropzone:hover,
-        .dropzone.is-dragover,
-        .dropzone-input:focus-visible + .dropzone {
-            border-color: var(--cor-primaria, var(--primary, #6c63ff));
-            background: color-mix(in srgb, var(--cor-primaria, var(--primary, #6c63ff)) 8%, transparent);
-        }
-
-        .dropzone.is-dragover {
-            transform: scale(1.01);
-        }
-
-        .dropzone.has-file {
-            border-style: solid;
-        }
-
-        .dropzone-empty {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            padding: 26px 16px;
-            text-align: center;
-        }
-
-        .dropzone-icon {
-            display: grid;
-            place-items: center;
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            color: var(--cor-primaria, var(--primary, #6c63ff));
-            background: color-mix(in srgb, var(--cor-primaria, var(--primary, #6c63ff)) 14%, transparent);
-        }
-
-        .dropzone-text strong {
-            color: var(--cor-primaria, var(--primary, #6c63ff));
-        }
-
-        .dropzone-empty small,
-        .dropzone-info small {
-            opacity: .65;
-        }
-
-        .dropzone-preview {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px;
-        }
-
-        .dropzone-preview img {
-            width: 72px;
-            height: 72px;
-            flex-shrink: 0;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
-        .dropzone-info {
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-            flex: 1;
-        }
-
-        .dropzone-info strong {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .dropzone-remove {
-            display: grid;
-            place-items: center;
-            width: 34px;
-            height: 34px;
-            flex-shrink: 0;
-            border: 0;
-            border-radius: 50%;
-            cursor: pointer;
-            color: inherit;
-            background: color-mix(in srgb, currentColor 10%, transparent);
-            transition: background .2s ease, color .2s ease;
-        }
-
-        .dropzone-remove:hover {
-            color: #fff;
-            background: #dc3545;
-        }
-
-        .dropzone [hidden] {
-            display: none !important;
-        }
-    </style>
+    <link rel="stylesheet" href="../CSS/account_ong.css">
 </head>
 <body>
     <header class="topbar">
@@ -707,6 +593,7 @@ $cnpjExibicao = strlen($cnpj) === 14
                 </section>
 
                 <section class="card" id="pets" data-panel>
+                    <?php if($ong['ic_ativo_ong']): ?>
                     <header class="card-header">
                         <h2>Pets</h2>
                         <p>Cadastre os animais disponíveis para adoção na sua ONG.</p>
@@ -844,6 +731,10 @@ $cnpjExibicao = strlen($cnpj) === 14
                             <?php } ?>
                         </ul>
                     <?php } ?>
+                    <?php else: ?>
+                        <p class="aprovation-message"><i class="bi bi-alarm"></i>Aguarde sua aprovação em nosso portal!
+                        </p>
+                    <?php endif ?>
                 </section>
 
                 <section class="card" id="seguranca" data-panel>

@@ -72,14 +72,14 @@
                         $primeiroNome = htmlspecialchars(strtok($_SESSION['nome_usuario'], " "));
 
                         if ($_SESSION['tipo_conta'] === 'ong') {
-                            echo "<a class='acount' href='PAGINAS/account_ong.php'>Olá, " . $primeiroNome . "</a>";
+                            echo "<a class='acount' href='PAGINAS/account_ong.php'><i class='bi bi-person-circle'></i>Conta</a>";
                         } else {
-                            echo "<a class='acount' href='PAGINAS/account.php'>Olá, " . $primeiroNome . "</a>";
+                            echo "<a class='acount' href='PAGINAS/account.php'><i class='bi bi-person-circle'></i>Conta</a>";
                         }
-                        } else {
-                            echo "<a class='acount-buton-notLogin' href='PAGINAS/login.php'>Entrar</a>";
-                        }
-                    ?>
+                    } else {
+                        echo "<a class='acount-buton-notLogin' href='PAGINAS/login.php'>Entrar</a>";
+                    }
+                ?>
                 </ul>
             </div>
             </div>
