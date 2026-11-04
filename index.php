@@ -9,7 +9,7 @@
     return mb_strtoupper($primeira . $ultima);
     }
 
-    $SQL = "SELECT a.id_avaliacao, a.ds_comentario_avaliacao, u.nm_usuario 
+    $SQL = "SELECT a.id_avaliacao, a.ds_comentario_avaliacao, u.nm_usuario, u.ds_imagem_perfil_usuario 
     FROM AVALIACAO AS a 
     JOIN USUARIO u ON a.id_usuario_fk = u.id_usuario
     ORDER BY a.dt_avaliacao DESC
@@ -100,7 +100,13 @@
             <?php  foreach($avaliacoes as $a): ?>
             <div class="card-avaliation">
                 <div class="card-header-avaliation">
-                    <div class="card-avatar"><p><?php echo iniciais($a['nm_usuario']) ?></p></div>
+                    <div class="card-avatar">
+                        <?php if($a['ds_imagem_perfil_usuario']):?>
+                            <img src="<?php echo $a['ds_imagem_perfil_usuario']; ?>" alt="">
+                        <?php else: ?>
+                            <p><?php echo iniciais($a['nm_usuario']) ?></p>
+                        <?php endif ?>
+                    </div>
                     <P><?php echo $a['nm_usuario'] ?></P>
                 </div>
                 <div class="content-card-avaliation">
