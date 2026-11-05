@@ -3,7 +3,7 @@ session_start();
 require_once('../conexao.php');
 
 if (!isset($_SESSION['tipo_conta']) || $_SESSION['tipo_conta'] !== 'usuario') {
-    header('Location: /pages/loginUsuario.html');
+    header('Location: login.php');
     exit;
 }
 
@@ -13,8 +13,13 @@ $stmt->execute();
 $resultado = $stmt->get_result();
 $usuario = $resultado->fetch_assoc() ?: [];
 
-// Animal solicitado (ex.: formulario_adocao.php?animal=12)
 $animal_id = (int)($_GET['cd_pet'] ?? 0);
+
+$SQL = "SELECT * FROM PET WHERE cd_pet = " . $animal_id;
+$stmt = $conn->prepare($SQL);
+$stmt->execute();
+$resultado = $stmt->get_result();
+$pet = $resultado->fetch_assoc();
 
 // Helper: escapa o valor e evita erro quando o campo vier vazio
 function e($v) {
@@ -39,45 +44,57 @@ $max_nascimento = date('Y-m-d', strtotime('-18 years'));
     </head>
     <body>
         <nav class="nav" id="navBar">
-            <div class="logo">
-                <a href="/homepage.html"> 
-                    <h1><span>Adota</span>Pet</h1>
-                </a>
-                <button class="menuBtn" id="menuBtn"><i class="bi bi-list"></i></button>
-            </div>
-            <div class="content-nav">
-                <div class="links">
-                <ul>
-                    <li>
-                        <a href="#">Sobre</a>
-                        <ul class="dropdown">
-                            <li><a href="/pages/sobre.html">Sobre o Portal</a></li>
-                            <li><a href="/pages/blog.html">Blog</a></li>
-                            <li><a href="/pages/sobre.html#avaliacoes">Avaliações</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Pet's</a>
-                        <ul class="dropdown">
-                            <li><a href="/pages/perdidos.html">Pet's Perdidos</a></li>
-                            <li><a href="/pages/perdidos.html#pets-achados">Pet's Achados</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Adoção</a>
-                        <ul class="dropdown">
-                            <li><a href="/pages/area_adocao.html">Área de Adoção</a></li>
-                            <li><a href="/pages/ongs.html">ONG's</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                </div>
-                <a class="acount-buton-notLogin" href="/pages/loginUsuario.html">Entrar</a>
-            </div>
-        </nav>
+        <div class="logo">
+            <a href="#"> 
+                <h1><span>Adota</span>Pet</h1>
+            </a>
+            <button class="menuBtn" id="menuBtn"><i class="bi bi-list"></i></button>
+        </div>
+        <div class="content-nav">
+            <div class="links">
+            <ul>
+                <li>
+                    <a href="sobre.php">Sobre</a>
+                    <ul class="dropdown">
+                        <li><a href="sobre.php">Sobre o Portal</a></li>
+                        <li><a href="blog.php">Blog</a></li>
+                        <li><a href="sobre.php#avaliacoes">Avaliações</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Pet's</a>
+                    <ul class="dropdown">
+                        <li><a href="perdidos.php">Pet's Perdidos</a></li>
+                        <li><a href="/pages/perdidos.html#pets-achados">Pet's Achados</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Adoção</a>
+                    <ul class="dropdown">
+                        <li><a href="area_adocao.php">Área de Adoção</a></li>
+                        <li><a href="/pages/ongs.html">ONG's</a></li>
+                    </ul>
+                </li>
+                <?php
+                    if (isset($_SESSION['tipo_conta'])) {
+                        $primeiroNome = htmlspecialchars(strtok($_SESSION['nome_usuario'], " "));
+
+                        if ($_SESSION['tipo_conta'] === 'ong') {
+                            echo "<a class='acount' href='account_ong.php'><i class='bi bi-person-circle'></i>Conta</a>";
+                        } else {
+                            echo "<a class='acount' href='account.php'><i class='bi bi-person-circle'></i>Conta</a>";
+                        }
+                    } else {
+                        echo "<a class='acount-buton-notLogin' href='PAGINAS/login.php'>Entrar</a>";
+                    }
+                ?>
+            </ul>
+        </div>
+        </div>
+    </nav>
         <section class="adoption-form-container">
             <h2>Formulário de Adoção</h2>
-            <p class="subtitle">Você esta solicitando a adoção de: <strong> Dogão </strong></p>
+            <p class="subtitle">Você esta solicitando a adoção de: <strong> <?php echo $pet['nm_pet']; ?> </strong></p>
 
             <form action="processa_adocao.php" method="POST" class="adoption-form">
                 <input type="hidden" name="animal_id" value="<?php echo $animal_id; ?>">

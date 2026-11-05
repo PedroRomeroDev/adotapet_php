@@ -52,7 +52,7 @@
                     <ul class="dropdown">
                         <li><a href="PAGINAS/sobre.php">Sobre o Portal</a></li>
                         <li><a href="/pages/blog.html">Blog</a></li>
-                        <li><a href="/pages/sobre.html#avaliacoes">Avaliações</a></li>
+                        <li><a href="PAGINAS/sobre.php#avaliacoes">Avaliações</a></li>
                     </ul>
                 </li>
                 <li>

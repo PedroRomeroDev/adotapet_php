@@ -267,6 +267,11 @@ main p {
     border: 1px solid var(--sobre-menta-borda);
     color: var(--sobre-verde-escuro);
     font-weight: 600;
+    overflow: hidden;
+}
+
+.avatar img {
+    width: 100%;
 }
 
 .card-header-text p:first-child {

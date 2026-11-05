@@ -542,6 +542,22 @@ ul {
     background: var(--conta-superficie-alt);
 }
 
+.solicitations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.solicitation {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px;
+    border: 1px solid var(--conta-borda);
+    border-radius: var(--conta-raio-campo);
+    background: var(--conta-superficie-alt);
+}
+
 .preference-icon {
     width: 44px;
     height: 44px;

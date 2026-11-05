@@ -82,7 +82,7 @@
                 <li>
                     <a href="#">Adoção</a>
                     <ul class="dropdown">
-                        <li><a href="PAGINAS/area_adocao.php">Área de Adoção</a></li>
+                        <li><a href="area_adocao.php">Área de Adoção</a></li>
                         <li><a href="/pages/ongs.html">ONG's</a></li>
                     </ul>
                 </li>
@@ -91,9 +91,9 @@
                         $primeiroNome = htmlspecialchars(strtok($_SESSION['nome_usuario'], " "));
 
                         if ($_SESSION['tipo_conta'] === 'ong') {
-                            echo "<a class='acount' href='PAGINAS/account_ong.php'><i class='bi bi-person-circle'></i>Conta</a>";
+                            echo "<a class='acount' href='account_ong.php'><i class='bi bi-person-circle'></i>Conta</a>";
                         } else {
-                            echo "<a class='acount' href='PAGINAS/account.php'><i class='bi bi-person-circle'></i>Conta</a>";
+                            echo "<a class='acount' href='account.php'><i class='bi bi-person-circle'></i>Conta</a>";
                         }
                     } else {
                         echo "<a class='acount-buton-notLogin' href='PAGINAS/login.php'>Entrar</a>";

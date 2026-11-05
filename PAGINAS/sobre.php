@@ -9,7 +9,7 @@
     return mb_strtoupper($primeira . $ultima);
     }
 
-    $SQL = "SELECT a.id_avaliacao, a.ds_comentario_avaliacao, u.nm_usuario 
+    $SQL = "SELECT a.id_avaliacao, a.ds_comentario_avaliacao, u.nm_usuario, u.ds_imagem_perfil_usuario 
     FROM AVALIACAO AS a 
     JOIN USUARIO u ON a.id_usuario_fk = u.id_usuario
     ORDER BY a.dt_avaliacao DESC
@@ -162,14 +162,20 @@
                 </div>
                 <h2>Avaliações</h2>
                 <p>Conte como foi sua experiência com o portal.</p>
-                <button class="btn-avaliar">Criar avaliação <i class="bi bi-plus"></i></button>
+                <a href="account.php#avaliacao"><button class="btn-avaliar">Criar avaliação <i class="bi bi-plus"></i></button></a>
             </div>
 
             <div class="reviews-cards-container">
                 <?php foreach($avaliacoes as $a): ?>
                 <article class="review-card">
                     <div class="review-card-header">
-                        <div class="avatar" aria-hidden="true"><?php echo iniciais($a['nm_usuario']) ?></div>
+                        <div class="avatar" aria-hidden="true">
+                            <?php if($a['ds_imagem_perfil_usuario']): ?>
+                                <img src="../<?php echo $a['ds_imagem_perfil_usuario'] ?>">
+                            <?php else: ?>
+                                <?php echo iniciais($a['nm_usuario']); ?>
+                            <?php endif ?>
+                        </div>
                         <div class="card-header-text">
                             <p><?php echo $a['nm_usuario'] ?></p>
                         </div>
