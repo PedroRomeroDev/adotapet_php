@@ -1,4 +1,4 @@
-nav {
+.nav {
     position: relative;
     z-index: 3000;
     display: flex;
@@ -20,7 +20,7 @@ nav {
     justify-content: space-between;
 }
 
-nav .logo a {
+.nav .logo a {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -28,7 +28,7 @@ nav .logo a {
     color: #000;
 }
 
-nav .logo h1 {
+.nav .logo h1 {
     margin: 0;
     font-size: 30px;
     font-weight: 600;
@@ -36,7 +36,7 @@ nav .logo h1 {
     line-height: 1.2;
 }
 
-nav .logo h1 span {
+.nav .logo h1 span {
     color: var(--cor-primaria);
     font-family: var(--fonte-titulo);
 }
@@ -76,7 +76,7 @@ nav .logo h1 span {
     justify-content: flex-end;
 }
 
-nav .links ul {
+.nav .links ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -85,11 +85,11 @@ nav .links ul {
     gap: 12px;
 }
 
-nav .links ul li {
+.nav .links ul li {
     position: relative;
 }
 
-nav .links ul li a {
+.nav .links ul li a {
     display: block;
     padding: 10px 16px;
     text-decoration: none;
@@ -98,11 +98,11 @@ nav .links ul li a {
     transition: background-color 0.2s ease;
 }
 
-nav .links ul li a:hover {
+.nav .links ul li a:hover {
     background-color: color-mix(in srgb, var(--cor-primaria) 12%, white);
 }
 
-nav .links ul li ul.dropdown {
+.nav .links ul li ul.dropdown {
     position: absolute;
     top: calc(100% + 8px);
     left: 0;
@@ -119,7 +119,7 @@ nav .links ul li ul.dropdown {
     z-index: 1000;
 }
 
-nav .links ul li ul.dropdown::before {
+.nav .links ul li ul.dropdown::before {
     content: "";
     position: absolute;
     top: -8px;
@@ -128,31 +128,31 @@ nav .links ul li ul.dropdown::before {
     height: 8px;
 }
 
-nav .links ul li:hover > ul.dropdown,
-nav .links ul li:focus-within > ul.dropdown {
+.nav .links ul li:hover > ul.dropdown,
+.nav .links ul li:focus-within > ul.dropdown {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s;
 }
 
-nav .links ul li ul.dropdown li {
+.nav .links ul li ul.dropdown li {
     display: block;
 }
 
-nav .links ul li ul.dropdown li a {
+.nav .links ul li ul.dropdown li a {
     padding: 10px 14px;
     color: #333;
     text-align: left;
     white-space: nowrap;
 }
 
-nav .links ul li ul.dropdown li a:hover {
+.nav .links ul li ul.dropdown li a:hover {
     background-color: #f1f4f3;
 }
 
-nav .links a.acount,
-nav .links a.acount-buton-notLogin {
+.nav .links a.acount,
+.nav .links a.acount-buton-notLogin {
     display: inline-flex;
     gap: 5px;
     align-items: center;
@@ -171,21 +171,21 @@ nav .links a.acount-buton-notLogin {
     transition: filter 0.2s ease;
 }
 
-nav .links a.acount:hover,
-nav .links a.acount-buton-notLogin:hover {
+.nav .links a.acount:hover,
+.nav .links a.acount-buton-notLogin:hover {
     background-color: var(--cor-primaria);
     filter: brightness(1.08);
 }
 
-nav .links a.acount:focus-visible,
-nav .links a.acount-buton-notLogin:focus-visible {
+.nav .links a.acount:focus-visible,
+.nav .links a.acount-buton-notLogin:focus-visible {
     outline: 3px solid color-mix(in srgb, var(--cor-primaria) 45%, white);
     outline-offset: 2px;
 }
 
 @media (max-width: 860px) {
 
-    nav {
+    .nav {
         flex-direction: column;
         align-items: stretch;
         justify-content: flex-start;
@@ -212,7 +212,7 @@ nav .links a.acount-buton-notLogin:focus-visible {
         transition: grid-template-rows 0.3s ease, visibility 0s 0.3s;
     }
 
-    nav.active .content-nav {
+    .nav.active .content-nav {
         grid-template-rows: 1fr;
         visibility: visible;
         transition: grid-template-rows 0.3s ease, visibility 0s;
@@ -223,7 +223,7 @@ nav .links a.acount-buton-notLogin:focus-visible {
         overflow: hidden;
     }
 
-    nav .links > ul {
+    .nav .links > ul {
         flex-direction: column;
         align-items: stretch;
         gap: 2px;
@@ -232,13 +232,13 @@ nav .links a.acount-buton-notLogin:focus-visible {
         border-top: 1px solid #eef2f0;
     }
 
-    nav .links ul li > a {
+    .nav .links ul li > a {
         padding: 10px 12px;
         font-weight: 600;
     }
 
     /* dropdown vira lista recuada, sempre visível */
-    nav .links ul li ul.dropdown {
+    .nav .links ul li ul.dropdown {
         position: static;
         min-width: 0;
         padding: 0 0 6px 14px;
@@ -251,23 +251,23 @@ nav .links a.acount-buton-notLogin:focus-visible {
         transition: none;
     }
 
-    nav .links ul li ul.dropdown::before {
+    .nav .links ul li ul.dropdown::before {
         display: none;
     }
 
-    nav .links ul li ul.dropdown li a {
+    .nav .links ul li ul.dropdown li a {
         padding: 8px 12px;
         font-weight: 400;
         color: #444;
         white-space: normal;
     }
 
-    nav .links ul li ul.dropdown li a:hover {
+    .nav .links ul li ul.dropdown li a:hover {
         background-color: color-mix(in srgb, var(--cor-primaria) 12%, white);
     }
 
-    nav .links a.acount,
-    nav .links a.acount-buton-notLogin {
+    .nav .links a.acount,
+    .nav .links a.acount-buton-notLogin {
         display: flex;
         width: 100%;
         margin-top: 10px;
@@ -276,9 +276,9 @@ nav .links a.acount-buton-notLogin:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
     .content-nav,
-    nav.active .content-nav,
-    nav .links ul li ul.dropdown,
-    nav .links ul li a,
+    .nav.active .content-nav,
+    .nav .links ul li ul.dropdown,
+    .nav .links ul li a,
     .logo .menuBtn {
         transition: none;
     }

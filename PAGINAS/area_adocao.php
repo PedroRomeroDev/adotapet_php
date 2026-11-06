@@ -54,55 +54,7 @@
 </head>
 
 <body>
-    <nav class="nav" id="navBar">
-        <div class="logo">
-            <a href="#"> 
-                <h1><span>Adota</span>Pet</h1>
-            </a>
-            <button class="menuBtn" id="menuBtn"><i class="bi bi-list"></i></button>
-        </div>
-        <div class="content-nav">
-            <div class="links">
-            <ul>
-                <li>
-                    <a href="sobre.php">Sobre</a>
-                    <ul class="dropdown">
-                        <li><a href="sobre.php">Sobre o Portal</a></li>
-                        <li><a href="blog.php">Blog</a></li>
-                        <li><a href="sobre.php#avaliacoes">Avaliações</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Pet's</a>
-                    <ul class="dropdown">
-                        <li><a href="perdidos.php">Pet's Perdidos</a></li>
-                        <li><a href="/pages/perdidos.html#pets-achados">Pet's Achados</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Adoção</a>
-                    <ul class="dropdown">
-                        <li><a href="area_adocao.php">Área de Adoção</a></li>
-                        <li><a href="/pages/ongs.html">ONG's</a></li>
-                    </ul>
-                </li>
-                <?php
-                    if (isset($_SESSION['tipo_conta'])) {
-                        $primeiroNome = htmlspecialchars(strtok($_SESSION['nome_usuario'], " "));
-
-                        if ($_SESSION['tipo_conta'] === 'ong') {
-                            echo "<a class='acount' href='account_ong.php'><i class='bi bi-person-circle'></i>Conta</a>";
-                        } else {
-                            echo "<a class='acount' href='account.php'><i class='bi bi-person-circle'></i>Conta</a>";
-                        }
-                    } else {
-                        echo "<a class='acount-buton-notLogin' href='PAGINAS/login.php'>Entrar</a>";
-                    }
-                ?>
-            </ul>
-        </div>
-        </div>
-    </nav>
+    <?php require_once __DIR__ . '/../navbar.php'; ?>
 
     <main>
         <section class="first-container">

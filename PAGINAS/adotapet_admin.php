@@ -187,8 +187,10 @@ foreach ($ongsEsperando as $o) {
             document.documentElement.dataset.theme = t;
         } catch (e) {}
     </script>
-</head>
+    <link rel="stylesheet" href="../CSS/navbar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"></head>
 <body>
+    <?php require_once __DIR__ . '/../navbar.php'; ?>
     <aside id="sidebar">
         <div class="brand"><img src="../assets/all_images/preto vazado.png" alt="AdotaPet"><span>Admin</span></div>
         <div>

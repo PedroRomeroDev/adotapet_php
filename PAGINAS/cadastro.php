@@ -1,37 +1,34 @@
 <?php
-
-    // Importando Conexao PHP
+    session_start();
     require_once("../conexao.php");
 
+    $erro = '';
+    $nome_cadastro = $telefone_cadastro = $email_cadastro = '';
+
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $nome_cadastro     = $_POST["nome-cadastro"];
-        $telefone_cadastro = $_POST["telefone-cadastro"];
-        $email_cadastro    = $_POST["email-cadastro"];
-        $senha_cadastro    = $_POST["senha-cadastro"];
+        $nome_cadastro     = trim($_POST["nome-cadastro"] ?? '');
+        $telefone_cadastro = trim($_POST["telefone-cadastro"] ?? '');
+        $email_cadastro    = trim($_POST["email-cadastro"] ?? '');
+        $senha_cadastro    = $_POST["senha-cadastro"] ?? '';
 
-        // Verifica se Campos Existem
-        if(empty($nome_cadastro) || empty($telefone_cadastro) || empty($email_cadastro) || empty($senha_cadastro)){
-            die("Preencha todos os campos.");
-        }
-
-        // Filtrando se Email é Valido
-        if(!filter_var($email_cadastro, FILTER_VALIDATE_EMAIL)){
-            die("Email Invalido");
-        }
-
-        // Insert no Banco de Dados
-        $SQL  = "INSERT INTO USUARIO (nm_usuario, cd_email_usuario, cd_telefone_usuario, cd_senha_usuario) VALUES (?, ?, ?, ?)";
-
-        // Preparando a Query
-        $stmt = $conn->prepare($SQL);
-
-        $stmt->bind_param("ssss", $nome_cadastro, $email_cadastro, $telefone_cadastro, $senha_cadastro);
-
-        // Executando a Query
-        if($stmt->execute()){
-            header('Location: login.php');
+        if($nome_cadastro === '' || $telefone_cadastro === '' || $email_cadastro === '' || $senha_cadastro === ''){
+            $erro = 'Preencha todos os campos.';
+        } elseif(!filter_var($email_cadastro, FILTER_VALIDATE_EMAIL)){
+            $erro = 'Digite um e-mail válido.';
         } else {
-            echo $stmt->error;
+            try {
+                $stmt = $conn->prepare("INSERT INTO USUARIO (nm_usuario, cd_email_usuario, cd_telefone_usuario, cd_senha_usuario) VALUES (?, ?, ?, ?)");
+                $stmt->bind_param("ssss", $nome_cadastro, $email_cadastro, $telefone_cadastro, $senha_cadastro);
+                if ($stmt->execute()) {
+                    header('Location: login.php');
+                    exit;
+                }
+                $erro = 'Não foi possível criar sua conta. Confira os dados e tente novamente.';
+            } catch (mysqli_sql_exception $e) {
+                $erro = $e->getCode() === 1062
+                    ? 'Este e-mail já está cadastrado.'
+                    : 'Não foi possível criar sua conta. Confira os dados e tente novamente.';
+            }
         }
 
     }
@@ -51,6 +48,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../CSS/variaveis.css">
     <link rel="stylesheet" href="../CSS/cadastro.css?v=<?php echo filemtime(__DIR__ . '/../CSS/cadastro.css'); ?>">
+    <link rel="stylesheet" href="../CSS/form-feedback.css">
     <link rel="shortcut icon" href="../assets/all_images/vazado.png">
 </head>
 
@@ -73,25 +71,32 @@
                         <p>Crie sua conta para adotar e acompanhar seus pets.</p>
                     </header>
 
+                    <?php if ($erro !== ''): ?>
+                        <p class="form-feedback" role="alert"><?= htmlspecialchars($erro, ENT_QUOTES, 'UTF-8') ?></p>
+                    <?php endif; ?>
+
                     <div class="form-section">
                         <h3>Seus dados</h3>
 
                         <div class="input-container full">
                             <label for="nome-cadastro">Nome</label>
                             <input type="text" id="nome-cadastro" name="nome-cadastro" placeholder="Nome completo"
+                                value="<?= htmlspecialchars($nome_cadastro, ENT_QUOTES, 'UTF-8') ?>"
                                 maxlength="200" autocomplete="name" required>
                         </div>
 
                         <div class="input-container">
                             <label for="telefone-cadastro">Telefone</label>
                             <input type="tel" id="telefone-cadastro" name="telefone-cadastro"
-                                placeholder="(00) 00000-0000" maxlength="20" autocomplete="tel" required>
+                                placeholder="(00) 00000-0000" value="<?= htmlspecialchars($telefone_cadastro, ENT_QUOTES, 'UTF-8') ?>"
+                                maxlength="20" autocomplete="tel" required>
                         </div>
 
                         <div class="input-container">
                             <label for="email-cadastro">E-mail</label>
                             <input type="email" id="email-cadastro" name="email-cadastro"
-                                placeholder="seu@email.com" maxlength="200" autocomplete="email" required>
+                                placeholder="seu@email.com" value="<?= htmlspecialchars($email_cadastro, ENT_QUOTES, 'UTF-8') ?>"
+                                maxlength="200" autocomplete="email" required>
                         </div>
 
                         <div class="input-container full">
