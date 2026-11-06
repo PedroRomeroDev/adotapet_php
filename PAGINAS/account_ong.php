@@ -858,22 +858,53 @@ $cnpjExibicao = strlen($cnpj) === 14
                         <h2>Solicitações de Adoção</h2>
                         <p>Administre as solicitações de adoção</p>
                     </header>
-                    <ul class="solicitations-list">
-                        <?php foreach($solicitacoes as $s): ?>
-                            <li class="solicitation">
-                            <div class="photo">
-                                <img src="../<?php echo $s['ds_imagem_pet'] ?>">
-                            </div>
-                            <div>
-                                <h3>Solicitação para: <?php echo $s['nm_pet']?></h3>
-                                <p>Adoção solicitada em: 00/00/2000</p>
-                            </div>
-                            <button>
-                                
-                            </button>
-                        </li>
-                        <?php endforeach ?>
-                    </ul>
+                    <?php if ($solicitacoes->num_rows == 0): ?>
+    <p class="solicitations-empty">Nenhuma solicitação de adoção por enquanto.</p>
+    <?php else: ?>
+    <ul class="solicitations-list">
+        <?php foreach ($solicitacoes as $s): ?>
+            <?php
+                $dataEnvio = date('d/m/Y', strtotime($s['dt_envio']));
+                $fotoSolicitacao = !empty($s['ds_imagem_pet']) ? '../' . $s['ds_imagem_pet'] : null;
+
+                // Ajuste para os valores reais do seu cd_status
+                $statusMap = [
+                    'pendente'  => ['pendente', 'Em análise'],
+                    'aprovado'  => ['aprovado', 'Aprovada'],
+                    'recusado'  => ['recusado', 'Recusada'],
+                ];
+                $statusChave = strtolower((string) $s['cd_status']);
+                [$statusClasse, $statusTexto] = $statusMap[$statusChave] ?? ['pendente', e($s['cd_status'])];
+            ?>
+            <li class="solicitation">
+                <div class="solicitation-photo">
+                    <?php if ($fotoSolicitacao): ?>
+                        <img src="<?php echo e($fotoSolicitacao); ?>" alt="Foto de <?php echo e($s['nm_pet']); ?>">
+                    <?php else: ?>
+                        <i class="fa-solid fa-paw"></i>
+                    <?php endif; ?>
+                </div>
+
+                <div class="solicitation-info">
+                    <h3>Solicitação para <?php echo e($s['nm_pet']); ?></h3>
+                    <div class="solicitation-meta">
+                        <span><i class="bi bi-person"></i> <?php echo e($s['nm_usuario']); ?></span>
+                        <span><i class="bi bi-calendar3"></i> <?php echo e($dataEnvio); ?></span>
+                    </div>
+                </div>
+
+                <span class="solicitation-status status-<?php echo e($statusClasse); ?>">
+                    <?php echo e($statusTexto); ?>
+                </span>
+
+                <a href="detalhe_solicitacao.php?usuario=<?php echo (int) $s['id_usuario_fk']; ?>&pet=<?php echo (int) $s['id_pet_fk']; ?>"
+                class="solicitation-action" aria-label="Ver solicitação de <?php echo e($s['nm_usuario']); ?>">
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <?php endif; ?>
                 </section>
             </div>
         </div>
