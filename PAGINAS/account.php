@@ -284,7 +284,7 @@ $telefoneExibicao = $usuario['cd_telefone_usuario'] ?? '';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"></head>
 <body>
     <?php require_once __DIR__ . '/../navbar.php'; ?>
-    <header class="topbar">
+    <!-- <header class="topbar">
         <div class="topbar-content">
             <a href="../index.php" class="back-link">
                 <i class="bi bi-arrow-left"></i>
@@ -292,7 +292,7 @@ $telefoneExibicao = $usuario['cd_telefone_usuario'] ?? '';
             </a>
             <span class="topbar-title">Configurações da conta</span>
         </div>
-    </header>
+    </header> -->
 
     <main class="account">
         <section class="profile-card">
