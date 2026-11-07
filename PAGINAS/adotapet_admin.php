@@ -1,12 +1,7 @@
 <?php
 
 date_default_timezone_set('America/Sao_Paulo');
-session_start();
-require_once("../conexao.php");
-
-/* Proteja o painel assim que souber o nome da sessão do seu login de admin:
-if (empty($_SESSION['email_admin'])) { header("Location: login.php"); exit; }
-*/
+require_once __DIR__ . '/admin_guard.php';
 
 function e($v) { return htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8'); }
 
@@ -189,8 +184,7 @@ foreach ($ongsEsperando as $o) {
     </script>
     <link rel="stylesheet" href="../CSS/navbar.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"></head>
-<body>
-    <?php require_once __DIR__ . '/../navbar.php'; ?>
+    <body>
     <aside id="sidebar">
         <div class="brand"><img src="../assets/all_images/preto vazado.png" alt="AdotaPet"><span>Admin</span></div>
         <div>
@@ -199,10 +193,12 @@ foreach ($ongsEsperando as $o) {
                 <?php foreach ($nav as [$id, $icone, $texto, $total]) { ?>
                     <a href="#<?= $id ?>" data-nav="<?= $id ?>"><i class="bi bi-<?= $icone ?>"></i> <?= $texto ?><?= $total !== null ? '<em>' . $total . '</em>' : '' ?></a>
                 <?php } ?>
+                <a href="blog_admin.php"><i class="bi bi-journal-text"></i> Gerenciar blog</a>
             </nav>
         </div>
         <nav class="side-foot">
             <a href="../index.php"><i class="bi bi-box-arrow-up-right"></i> Ver portal</a>
+            <a href="logout.php"><i class="bi bi-box-arrow-left"></i> Sair do admin</a>
         </nav>
     </aside>
 

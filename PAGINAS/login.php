@@ -2,6 +2,9 @@
     session_start();
     require_once("../conexao.php");
 
+    const ADMIN_EMAIL = 'admin@adotapet.local';
+    const ADMIN_PASSWORD = 'adotapet2026';
+
     $erro = '';
     $email = '';
 
@@ -13,6 +16,13 @@
             $erro = 'Informe seu e-mail e sua senha.';
         } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             $erro = 'Digite um e-mail válido.';
+        } elseif(hash_equals(ADMIN_EMAIL, $email) && hash_equals(ADMIN_PASSWORD, $senha)){
+            session_regenerate_id(true);
+            $_SESSION['tipo_conta'] = 'admin';
+            $_SESSION['nome_admin'] = 'Admin';
+            $_SESSION['email_admin'] = ADMIN_EMAIL;
+            header('Location: adotapet_admin.php');
+            exit;
         } else {
             $stmt = $conn->prepare("SELECT * FROM USUARIO WHERE cd_email_usuario = ?");
             $stmt->bind_param("s", $email);

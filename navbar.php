@@ -42,10 +42,16 @@ $baseUrl = '/adotapet_php';
                 </li>
                 <li>
                     <?php if (isset($_SESSION['tipo_conta'])): ?>
-                        <?php $paginaConta = $_SESSION['tipo_conta'] === 'ong' ? 'account_ong.php' : 'account.php'; ?>
-                        <a class="acount" href="<?= $baseUrl ?>/PAGINAS/<?= $paginaConta ?>">
-                            <i class="bi bi-person-circle"></i> Conta
-                        </a>
+                        <?php if ($_SESSION['tipo_conta'] === 'admin'): ?>
+                            <a class="acount" href="<?= $baseUrl ?>/PAGINAS/adotapet_admin.php">
+                                <i class="bi bi-person-circle"></i> Painel admin
+                            </a>
+                        <?php else: ?>
+                            <?php $paginaConta = $_SESSION['tipo_conta'] === 'ong' ? 'account_ong.php' : 'account.php'; ?>
+                            <a class="acount" href="<?= $baseUrl ?>/PAGINAS/<?= $paginaConta ?>">
+                                <i class="bi bi-person-circle"></i> Conta
+                            </a>
+                        <?php endif; ?>
                     <?php else: ?>
                         <a class="acount-buton-notLogin" href="<?= $baseUrl ?>/PAGINAS/login.php">Entrar</a>
                     <?php endif; ?>
