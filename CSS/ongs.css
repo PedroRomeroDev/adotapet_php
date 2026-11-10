@@ -709,6 +709,10 @@ a.contato:hover {
         align-items: stretch;
     }
 
+    .search-box {
+        flex: none;
+    }
+
     .select-box select {
         flex: 1;
     }
