@@ -270,6 +270,27 @@ $membroDesde = date("m/Y", strtotime($usuario['dt_cadastro']));
 
 $telefoneExibicao = $usuario['cd_telefone_usuario'] ?? '';
 
+
+    $SolicitacoesQuery = "
+                        SELECT
+                            f.id_usuario_fk,
+                            f.id_pet_fk,
+                            u.nm_usuario,
+                            p.nm_pet,
+                            p.ds_imagem_pet,
+                            f.dt_envio,
+                            f.cd_status
+                        FROM formulario_adocao f
+                        JOIN pet p     ON p.cd_pet = f.id_pet_fk
+                        JOIN usuario u ON u.id_usuario = f.id_usuario_fk
+                        WHERE u.cd_email_usuario = ?
+                        ORDER BY f.dt_envio DESC; 
+                        ";
+        $stmt = $conn->prepare($SolicitacoesQuery);
+        $stmt->bind_param("s", $usuario['cd_email_usuario']);
+        $stmt->execute();
+        $solicitacoes = $stmt->get_result();
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -280,6 +301,7 @@ $telefoneExibicao = $usuario['cd_telefone_usuario'] ?? '';
     <link rel="shortcut icon" href="../assets/all_images/branco vazado.png">
     <link rel="stylesheet" href="../CSS/variaveis.css">
     <link rel="stylesheet" href="../CSS/account.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../CSS/navbar.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"></head>
 <body>
@@ -352,12 +374,19 @@ $telefoneExibicao = $usuario['cd_telefone_usuario'] ?? '';
                 <a href="#preferencias" class="menu-item" data-section="preferencias">
                     <i class="bi bi-sliders"></i> Preferências
                 </a>
+                <a href="#solicitacoes" class="menu-item" data-section="solicitacao">
+                    <i class="fa-solid fa-folder-open"></i> Minhas Solicitações
+                </a>
+                <a href="#perdidos" class="menu-item" data-section="perdidos">
+                    <i class="fa-solid fa-bone"></i> Pet's Perdidos
+                </a>
                 <a href="#avaliacao" class="menu-item" data-section="avaliacao">
                     <i class="bi bi-chat-heart-fill"></i> Minha avaliação
                 </a>
                 <a href="#conta" class="menu-item" data-section="conta">
                     <i class="bi bi-gear-fill"></i> Conta
                 </a>
+                
             </nav>
 
             <div class="account-sections">
@@ -480,6 +509,10 @@ $telefoneExibicao = $usuario['cd_telefone_usuario'] ?? '';
                     </form>
                 </section>
 
+                <section class="card" id="perdidos" data-panel>
+                    <p>FAZ AQUI A SEÇÃO DE PETS PERDIDOS</p>
+                </section>
+
                 <section class="card" id="preferencias" data-panel>
                     <header class="card-header">
                         <h2>Preferências</h2>
@@ -512,12 +545,64 @@ $telefoneExibicao = $usuario['cd_telefone_usuario'] ?? '';
                     </ul>
                 </section>
 
+                <section class="card" id="solicitacao" data-panel>
+                    <header class="card-header">
+                        <h2>Minhas Solicitações</h2>
+                        <p>Suas solicitações de adoção.</p>
+                    </header>
+
+                    <?php if ($solicitacoes->num_rows == 0): ?>
+                        <p class="solicitations-empty">Nenhuma solicitação de adoção por enquanto.</p>
+                    <?php else: ?>
+                        <ul class="solicitations-list">
+                            <?php foreach ($solicitacoes as $s): ?>
+                                <?php
+                                    $dataEnvio = date('d/m/Y', strtotime($s['dt_envio']));
+                                    $fotoSolicitacao = !empty($s['ds_imagem_pet']) ? '../' . $s['ds_imagem_pet'] : null;
+
+                                    $statusMap = [
+                                        'pendente' => ['pendente', 'Em análise'],
+                                        'aprovado' => ['aprovado', 'Aprovada'],
+                                        'recusado' => ['recusado', 'Recusada'],
+                                    ];
+                                    $statusChave = strtolower((string) $s['cd_status']);
+                                    [$statusClasse, $statusTexto] = $statusMap[$statusChave] ?? ['pendente', $s['cd_status']];
+                                ?>
+                                <li class="solicitation">
+                                    <div class="solicitation-photo">
+                                        <?php if ($fotoSolicitacao): ?>
+                                            <img src="<?php echo e($fotoSolicitacao); ?>" alt="Foto de <?php echo e($s['nm_pet']); ?>">
+                                        <?php else: ?>
+                                            <i class="fa-solid fa-paw"></i>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <div class="solicitation-info">
+                                        <h3>Solicitação para <?php echo e($s['nm_pet']); ?></h3>
+                                        <div class="solicitation-meta">
+                                            <span><i class="bi bi-calendar3"></i> <?php echo e($dataEnvio); ?></span>
+                                        </div>
+                                    </div>
+
+                                    <span class="solicitation-status status-<?php echo e($statusClasse); ?>">
+                                        <?php echo e($statusTexto); ?>
+                                    </span>
+
+                                    <a href="detalhe_solicitacao.php?usuario=<?php echo (int) $s['id_usuario_fk']; ?>&pet=<?php echo (int) $s['id_pet_fk']; ?>"
+                                    class="solicitation-action" aria-label="Ver solicitação de <?php echo e($s['nm_pet']); ?>">
+                                        <i class="bi bi-chevron-right"></i>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </section>
+
                 <section class="card" id="avaliacao" data-panel>
                     <header class="card-header">
                         <h2>Minha avaliação</h2>
                         <p>Conte o que você acha do portal. Sua opinião nos ajuda a melhorar.</p>
                     </header>
-
                     <form action="" method="POST" class="form-grid">
                         <div class="field field-full">
                             <label for="inputAvaliation">Seu comentário</label>
