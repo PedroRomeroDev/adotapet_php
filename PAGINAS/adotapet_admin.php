@@ -186,7 +186,7 @@ foreach ($ongsEsperando as $o) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"></head>
     <body>
     <aside id="sidebar">
-        <div class="brand"><img src="../assets/all_images/preto vazado.png" alt="AdotaPet"><span>Admin</span></div>
+        <a href="../index.php"><div class="brand"><img src="../assets/all_images/preto vazado.png" alt="AdotaPet"><span>Admin</span></div></a>
         <div>
             <div class="label">Gerenciar</div>
             <nav>

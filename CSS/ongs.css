@@ -376,7 +376,7 @@ main h3,
 .overlay-modal {
     position: fixed;
     inset: 0;
-    z-index: 1000;
+    z-index: 3000;
     display: none;
     align-items: center;
     justify-content: center;
