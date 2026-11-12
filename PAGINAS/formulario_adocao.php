@@ -21,6 +21,13 @@ $stmt->execute();
 $resultado = $stmt->get_result();
 $pet = $resultado->fetch_assoc();
 
+$stmt = $conn->prepare("SELECT 1 FROM formulario_adocao WHERE id_usuario_fk = ? AND id_pet_fk = ?");
+$stmt->bind_param("ii", $usuario['id_usuario'], $animal_id);
+$stmt->execute();
+$stmt->store_result();
+$ja_enviou = $stmt->num_rows > 0;
+$stmt->close();
+
 // Helper: escapa o valor e evita erro quando o campo vier vazio
 function e($v) {
     return htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8');
@@ -40,15 +47,21 @@ $max_nascimento = date('Y-m-d', strtotime('-18 years'));
         <link rel="stylesheet" href="../CSS/navbar.css">
         <link rel="stylesheet" href="../CSS/formulario_adocao.css">
         <link rel="stylesheet" href="../CSS/variaveis.css">
-        <link rel="shortcut icon" href="/assets/all_images/branco vazado.png">
+        <link rel="shortcut icon" href="../assets/all_images/branco vazado.png">
     </head>
     <body>
         <?php require_once __DIR__ . '/../navbar.php'; ?>
         <section class="adoption-form-container">
             <h2>Formulário de Adoção</h2>
             <p class="subtitle">Você esta solicitando a adoção de: <strong> <?php echo $pet['nm_pet']; ?> </strong></p>
+            <?php if($ja_enviou): ?>
+                <div class="form-feedback">
+                    <p>Você já enviou uma solicitação de adoção para este pet.</p>
+                </div>
+            <?php endif ?>
 
-            <form action="processa_adocao.php" method="POST" class="adoption-form">
+            <?php if (!$ja_enviou): ?>
+                <form action="processa_adocao.php" method="POST" class="adoption-form">
                 <input type="hidden" name="animal_id" value="<?php echo $animal_id; ?>">
 
                 <div class="form-column">
@@ -58,7 +71,7 @@ $max_nascimento = date('Y-m-d', strtotime('-18 years'));
                             <label for="nome">Nome</label>
                             <input type="text" id="nome" name="nome-tutor"
                                    value="<?php echo e($usuario['nm_usuario'] ?? ''); ?>"
-                                   minlength="3" maxlength="120" autocomplete="name" required>
+                                   minlength="3" maxlength="120" autocomplete="name" required readonly>
                         </div>
 
                         <div class="input-group">
@@ -84,7 +97,7 @@ $max_nascimento = date('Y-m-d', strtotime('-18 years'));
                             <label for="telefone">Numero Telefone</label>
                             <input type="tel" id="telefone" name="telefone"
                                    value="<?php echo e($usuario['cd_telefone_usuario'] ?? ''); ?>"
-                                   data-mask="telefone" placeholder="(00) 00000-0000" required>
+                                   data-mask="telefone" placeholder="(00) 00000-0000" required readonly>
                         </div>
 
                         <div class="input-group">
@@ -180,9 +193,10 @@ $max_nascimento = date('Y-m-d', strtotime('-18 years'));
                 </div>
 
                 <div class="form-submit">
-                    <input type="submit" value="Enviar">
+                    <input type="submit" value="Enviar" <?= $ja_enviou ? 'disabled' : '' ?>>
                 </div>
             </form>
+            <?php endif ?>
         </section>
         <script src="../SCRIPT/mascaras.js"></script>
         <script src="../SCRIPT/headerScript.js"></script>

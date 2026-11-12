@@ -35,11 +35,19 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $horas_sozinho, $moradia, $protecao, $motivacao
     );
 
-    if ($stmt->execute()) {
+    try {
+        $stmt->execute();
+        $_SESSION['flash_sucesso'] = 'Solicitação enviada com sucesso!';
         header("Location: area_adocao.php");
         exit;
-    } else {
-        echo "Erro ao enviar: " . $stmt->error;
+    } catch (mysqli_sql_exception $e) {
+        if ($e->getCode() === 1062) {
+            $_SESSION['flash_erro'] = 'Você já enviou uma solicitação de adoção para este pet.';
+        } else {
+            $_SESSION['flash_erro'] = 'Não foi possível enviar sua solicitação. Tente novamente.';
+        }
+        header("Location: formulario_adocao.php?cd_pet=" . $id_pet);
+        exit;
     }
 }
 ?>
