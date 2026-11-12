@@ -82,61 +82,47 @@ if (!empty($formulario['dt_nascimento_usuario'])) {
 // Cidade - Estado
 $local = implode(' - ', array_filter([$formulario['nm_cidade_usuario'], $formulario['sg_estado_usuario']])) ?: 'Não informado';
 
-$pendente = strtoupper((string) $formulario['cd_status']) === 'PENDENTE';
+// Link do WhatsApp (botão independente, não altera nada no banco)
+$linkWhatsapp = null;
+if ($telefone !== '') {
+    $telefoneWa = strlen($telefone) <= 11 ? '55' . $telefone : $telefone;
+    $textoWa = "Olá, {$formulario['nm_usuario']}! Aqui é da {$ong['nm_ong']}. "
+             . "Estamos entrando em contato sobre sua solicitação de adoção do(a) {$formulario['nm_pet']}. 🐾";
+    $linkWhatsapp = "https://wa.me/" . $telefoneWa . "?text=" . rawurlencode($textoWa);
+}
+
+$statusPermitidos = ['PENDENTE', 'APROVADO', 'RECUSADO'];
 $erro = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pendente) {
-    $acao = $_POST['acao'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $novoStatus = strtoupper(trim($_POST['cd_status'] ?? ''));
     $resposta = trim($_POST['ds_resposta_ong'] ?? '');
 
-    if ($acao !== 'aprovar' && $acao !== 'recusar') {
-        $erro = 'Ação inválida.';
-    } elseif ($acao === 'recusar' && $resposta === '') {
-        $erro = 'Explique o motivo da recusa para o adotante.';
+    if (!in_array($novoStatus, $statusPermitidos, true)) {
+        $erro = 'Status inválido.';
     } else {
-        $novoStatus = $acao === 'aprovar' ? 'APROVADO' : 'RECUSADO';
+        $respostaBanco = $resposta !== '' ? $resposta : null; // mensagem é opcional
 
-        // O filtro por PENDENTE evita responder duas vezes à mesma solicitação
+        // Sem filtro por PENDENTE: a ONG pode mudar o status quantas vezes quiser.
+        // Voltando para PENDENTE, a data de resposta é limpa.
         $stmt = $conn->prepare(
             "UPDATE formulario_adocao
-            SET cd_status = ?, ds_resposta_ong = ?, dt_resposta = NOW()
-            WHERE id_usuario_fk = ? AND id_pet_fk = ? AND UPPER(cd_status) = 'PENDENTE'"
+            SET cd_status = ?,
+                ds_resposta_ong = ?,
+                dt_resposta = CASE WHEN ? = 'PENDENTE' THEN NULL ELSE NOW() END
+            WHERE id_usuario_fk = ? AND id_pet_fk = ?"
         );
-        $stmt->bind_param("ssii", $novoStatus, $resposta, $idUsuario, $idPet);
+        $stmt->bind_param("sssii", $novoStatus, $respostaBanco, $novoStatus, $idUsuario, $idPet);
         $stmt->execute();
 
-        if ($stmt->affected_rows === 0) {
-            $_SESSION['aviso'] = ['tipo' => 'erro', 'mensagem' => 'Esta solicitação já foi respondida.', 'secao' => 'solicitacoes'];
-            header("Location: " . $paginaConta . "#solicitacoes");
-            exit;
-        }
+        $mensagensAviso = [
+            'PENDENTE' => 'Solicitação voltou para análise.',
+            'APROVADO' => 'Solicitação aprovada.',
+            'RECUSADO' => 'Solicitação recusada.',
+        ];
 
-        if ($acao === 'recusar') {
-            $_SESSION['aviso'] = ['tipo' => 'sucesso', 'mensagem' => 'Solicitação recusada.', 'secao' => 'solicitacoes'];
-            header("Location: " . $paginaConta . "#solicitacoes");
-            exit;
-        }
-
-        // Aprovada: abre o WhatsApp do adotante com a mensagem pronta
-        if ($telefone === '') {
-            $_SESSION['aviso'] = ['tipo' => 'erro', 'mensagem' => 'Solicitação aprovada, mas o adotante não tem telefone cadastrado.', 'secao' => 'solicitacoes'];
-            header("Location: " . $paginaConta . "#solicitacoes");
-            exit;
-        }
-
-        if (strlen($telefone) <= 11) {
-            $telefone = '55' . $telefone;
-        }
-
-        $mensagem = "Olá, {$formulario['nm_usuario']}! Aqui é da {$ong['nm_ong']}. "
-                  . "Seu formulário de adoção do(a) {$formulario['nm_pet']} foi aprovado! 🐾";
-
-        if ($resposta !== '') {
-            $mensagem .= "\n\n" . $resposta;
-        }
-
-        $_SESSION['aviso'] = ['tipo' => 'sucesso', 'mensagem' => 'Solicitação aprovada.', 'secao' => 'solicitacoes'];
-        header("Location: https://wa.me/" . $telefone . "?text=" . rawurlencode($mensagem));
+        $_SESSION['aviso'] = ['tipo' => 'sucesso', 'mensagem' => $mensagensAviso[$novoStatus], 'secao' => 'solicitacoes'];
+        header("Location: " . $paginaConta . "#solicitacoes");
         exit;
     }
 }
@@ -145,18 +131,22 @@ $statusClasse = strtolower((string) $formulario['cd_status']);
 $statusTextos = ['pendente' => 'Em análise', 'aprovado' => 'Aprovada', 'recusado' => 'Recusada'];
 $statusTexto = $statusTextos[$statusClasse] ?? $formulario['cd_status'];
 
+// Valor selecionado no <select> (mantém o que foi enviado se houve erro)
+$statusAtual = strtoupper((string) ($_POST['cd_status'] ?? $formulario['cd_status']));
+$opcoesStatus = ['PENDENTE' => 'Em análise', 'APROVADO' => 'Aprovada', 'RECUSADO' => 'Recusada'];
+
 $fotoUsuario = !empty($formulario['ds_imagem_perfil_usuario']) ? '../' . $formulario['ds_imagem_perfil_usuario'] : null;
 $fotoPet = !empty($formulario['ds_imagem_pet']) ? '../' . $formulario['ds_imagem_pet'] : null;
 $dataEnvio = date('d/m/Y \à\s H:i', strtotime($formulario['dt_envio']));
 
 // [ícone, rótulo, valor]
 $dadosUsuario = [
-    ['bi bi-envelope',      'E-mail',          $formulario['cd_email_usuario']],
-    ['bi bi-telephone',     'Telefone',        $telefoneExibicao],
-    ['bi bi-calendar-heart', 'Nascimento',     $nascimento],
-    ['bi bi-buildings',     'Cidade / Estado', $local],
-    ['bi bi-geo-alt',       'Endereço',        $formulario['ds_endereco_usuario'] ?: 'Não informado'],
-    ['bi bi-calendar-check', 'Membro desde',   date('d/m/Y', strtotime($formulario['dt_cadastro']))],
+    ['bi bi-envelope',       'E-mail',          $formulario['cd_email_usuario']],
+    ['bi bi-telephone',      'Telefone',        $telefoneExibicao],
+    ['bi bi-calendar-heart', 'Nascimento',      $nascimento],
+    ['bi bi-buildings',      'Cidade / Estado', $local],
+    ['bi bi-geo-alt',        'Endereço',        $formulario['ds_endereco_usuario'] ?: 'Não informado'],
+    ['bi bi-calendar-check', 'Membro desde',    date('d/m/Y', strtotime($formulario['dt_cadastro']))],
 ];
 
 $respostasFormulario = [
@@ -176,23 +166,20 @@ $respostasFormulario = [
     <title>Adoção de <?php echo htmlspecialchars($formulario['nm_pet']); ?></title>
     <link rel="shortcut icon" href="../assets/all_images/branco vazado.png">
     <link rel="stylesheet" href="../CSS/variaveis.css">
-    <link rel="stylesheet" href="../CSS/account_ong.css">
+    <link rel="stylesheet" href="../CSS/solicitacao_ong.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../CSS/navbar.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"></head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
 <body>
     <?php require_once __DIR__ . '/../navbar.php'; ?>
-    <!-- <header class="topbar">
-        <div class="topbar-content">
-            <a href="<?php echo htmlspecialchars($paginaConta); ?>#solicitacoes" class="back-link">
-                <i class="bi bi-arrow-left"></i>
-                <span>Voltar às solicitações</span>
-            </a>
-            <span class="topbar-title">Solicitação de adoção</span>
-        </div>
-    </header> -->
 
-    <main class="account" style="max-width: 800px;">
+    <main class="solicitacao">
+        <a href="<?php echo htmlspecialchars($paginaConta); ?>#solicitacoes" class="back-link">
+            <i class="bi bi-arrow-left"></i>
+            <span>Voltar às solicitações</span>
+        </a>
+
         <?php if ($erro !== '') { ?>
             <div class="alert alert-erro" role="alert">
                 <i class="bi bi-exclamation-triangle-fill"></i>
@@ -202,7 +189,7 @@ $respostasFormulario = [
 
         <!-- Card 1: dados do adotante -->
         <section class="card">
-            <header class="card-header" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+            <header class="card-header card-header-row">
                 <div class="solicitation-photo">
                     <?php if ($fotoUsuario) { ?>
                         <img src="<?php echo htmlspecialchars($fotoUsuario); ?>" alt="Foto de <?php echo htmlspecialchars($formulario['nm_usuario']); ?>">
@@ -211,10 +198,20 @@ $respostasFormulario = [
                     <?php } ?>
                 </div>
 
-                <div style="flex: 1; min-width: 200px;">
+                <div class="card-header-info">
                     <h2><?php echo htmlspecialchars($formulario['nm_usuario']); ?></h2>
                     <p>Dados do adotante</p>
                 </div>
+
+                <?php if ($linkWhatsapp) { ?>
+                    <a href="<?php echo htmlspecialchars($linkWhatsapp); ?>" target="_blank" rel="noopener" class="button button-primary">
+                        <i class="bi bi-whatsapp"></i> Chamar no WhatsApp
+                    </a>
+                <?php } else { ?>
+                    <span class="button button-primary button-disabled" title="Adotante sem telefone cadastrado" aria-disabled="true">
+                        <i class="bi bi-whatsapp"></i> Sem telefone
+                    </span>
+                <?php } ?>
             </header>
 
             <ul class="preference-list">
@@ -232,7 +229,7 @@ $respostasFormulario = [
 
         <!-- Card 2: formulário preenchido -->
         <section class="card">
-            <header class="card-header" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+            <header class="card-header card-header-row">
                 <div class="solicitation-photo">
                     <?php if ($fotoPet) { ?>
                         <img src="<?php echo htmlspecialchars($fotoPet); ?>" alt="Foto de <?php echo htmlspecialchars($formulario['nm_pet']); ?>">
@@ -241,7 +238,7 @@ $respostasFormulario = [
                     <?php } ?>
                 </div>
 
-                <div style="flex: 1; min-width: 200px;">
+                <div class="card-header-info">
                     <h2>Solicitação para <?php echo htmlspecialchars($formulario['nm_pet']); ?></h2>
                     <p>Formulário enviado em <?php echo htmlspecialchars($dataEnvio); ?>.</p>
                 </div>
@@ -252,59 +249,55 @@ $respostasFormulario = [
             </header>
 
             <ul class="preference-list">
-                <?php foreach ($respostasFormulario as [$icone, $pergunta, $resposta]) { ?>
+                <?php foreach ($respostasFormulario as [$icone, $pergunta, $valor]) { ?>
                     <li class="preference">
                         <div class="preference-icon"><i class="<?php echo htmlspecialchars($icone); ?>"></i></div>
                         <div class="preference-text">
                             <span><?php echo htmlspecialchars($pergunta); ?></span>
-                            <strong style="white-space: pre-line;"><?php echo htmlspecialchars((string) $resposta); ?></strong>
+                            <strong class="preserve-lines"><?php echo htmlspecialchars((string) $valor); ?></strong>
                         </div>
                     </li>
                 <?php } ?>
             </ul>
         </section>
 
-        <!-- Card 3: resposta da ONG -->
+        <!-- Card 3: atendimento -->
         <section class="card">
-            <?php if ($pendente) { ?>
-                <header class="card-header">
-                    <h2>Sua resposta</h2>
-                    <p>Se aprovar, o WhatsApp do adotante abre com a mensagem pronta para enviar.</p>
-                </header>
-
-                <form action="" method="POST" class="form-grid">
-                    <div class="field field-full">
-                        <label for="ds_resposta_ong">Mensagem para o adotante</label>
-                        <textarea id="ds_resposta_ong" name="ds_resposta_ong" placeholder="Ex.: Podemos combinar uma visita na sexta-feira?"><?php echo htmlspecialchars($_POST['ds_resposta_ong'] ?? ''); ?></textarea>
-                    </div>
-
-                    <div class="form-actions field-full">
-                        <button type="submit" name="acao" value="recusar" class="button button-danger-ghost">
-                            <i class="bi bi-x-lg"></i> Recusar
-                        </button>
-                        <button type="submit" name="acao" value="aprovar" class="button button-primary">
-                            <i class="bi bi-whatsapp"></i> Aprovar e chamar no WhatsApp
-                        </button>
-                    </div>
-                </form>
-            <?php } else { ?>
-                <header class="card-header">
-                    <h2>Resposta da ONG</h2>
+            <header class="card-header">
+                <h2>Atendimento</h2>
+                <p>
+                    Altere o status quando quiser. A mensagem é opcional.
                     <?php if (!empty($formulario['dt_resposta'])) { ?>
-                        <p>Respondido em <?php echo htmlspecialchars(date('d/m/Y \à\s H:i', strtotime($formulario['dt_resposta']))); ?>.</p>
+                        Última resposta em <?php echo htmlspecialchars(date('d/m/Y \à\s H:i', strtotime($formulario['dt_resposta']))); ?>.
                     <?php } ?>
-                </header>
+                </p>
+            </header>
 
-                <ul class="preference-list">
-                    <li class="preference">
-                        <div class="preference-icon"><i class="bi bi-chat-left-text"></i></div>
-                        <div class="preference-text">
-                            <span>Mensagem enviada ao adotante</span>
-                            <strong style="white-space: pre-line;"><?php echo htmlspecialchars($formulario['ds_resposta_ong'] ?: 'Sem mensagem.'); ?></strong>
-                        </div>
-                    </li>
-                </ul>
-            <?php } ?>
+            <form action="" method="POST" class="form-grid">
+                <div class="field field-full">
+                    <label for="cd_status">Status</label>
+                    <select id="cd_status" name="cd_status">
+                        <?php foreach ($opcoesStatus as $valor => $texto) { ?>
+                            <option value="<?php echo $valor; ?>" <?php echo $statusAtual === $valor ? 'selected' : ''; ?>>
+                                <?php echo $texto; ?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                </div>
+
+                <div class="field field-full">
+                    <label for="ds_resposta_ong">Mensagem para o adotante (opcional)</label>
+                    <textarea id="ds_resposta_ong" name="ds_resposta_ong" placeholder="Ex.: Podemos combinar uma visita na sexta-feira?"><?php
+                        echo htmlspecialchars($_POST['ds_resposta_ong'] ?? ($formulario['ds_resposta_ong'] ?? ''));
+                    ?></textarea>
+                </div>
+
+                <div class="form-actions field-full">
+                    <button type="submit" class="button button-primary">
+                        <i class="bi bi-check-lg"></i> Salvar
+                    </button>
+                </div>
+            </form>
         </section>
     </main>
 
