@@ -1,6 +1,7 @@
 <?php
     session_start();
     require_once("../conexao.php");
+    require_once("funcoes.php");
 
     $erro = '';
     $cnpj = $nome_cadastro = $nome_responsavel_cadastro = $telefone_cadastro = '';
@@ -17,28 +18,37 @@
         $email_cadastro                = trim($_POST["email-cadastro"] ?? '');
         $senha_cadastro                = $_POST["senha-cadastro"] ?? '';
 
+        // "(11) 91234-5678" vira "11912345678"
+        $telefone_numeros = preg_replace('/\D/', '', $telefone_cadastro);
+
         if( empty($cnpj)                      ||
             empty($nome_cadastro)             ||
-            empty($nome_responsavel_cadastro) || 
-            empty($telefone_cadastro)         || 
-            empty($endereco_ong)              || 
-            empty($cidade_ong)                || 
-            empty($estado_ong)                || 
-            empty($email_cadastro)            || 
+            empty($nome_responsavel_cadastro) ||
+            empty($telefone_cadastro)         ||
+            empty($endereco_ong)              ||
+            empty($cidade_ong)                ||
+            empty($estado_ong)                ||
+            empty($email_cadastro)            ||
             empty($senha_cadastro)){
             $erro = 'Preencha todos os campos.';
         } elseif(!filter_var($email_cadastro, FILTER_VALIDATE_EMAIL)){
             $erro = 'Digite um e-mail válido.';
+        } elseif(strlen($telefone_numeros) < 10 || strlen($telefone_numeros) > 11){
+            $erro = 'Digite um telefone válido com DDD.';
+        }elseif(email_em_uso($conn, $email_cadastro)){
+            $erro = 'Este e-mail já está cadastrado.';
+        } elseif(telefone_em_uso($conn, $telefone_numeros)){
+            $erro = 'Este telefone já está cadastrado.';
         } else {
             $SQL  = "INSERT INTO ONG (
-        cd_cnpj_ong, 
-        nm_ong, 
-        nm_responsavel_ong, 
-        cd_telefone_ong, 
-        ds_endereco_ong, 
-        nm_cidade_ong, 
+        cd_cnpj_ong,
+        nm_ong,
+        nm_responsavel_ong,
+        cd_telefone_ong,
+        ds_endereco_ong,
+        nm_cidade_ong,
         sg_estado_ong,
-        cd_email_ong, 
+        cd_email_ong,
         cd_senha_ong
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -48,7 +58,7 @@
                     $cnpj,
                     $nome_cadastro,
                     $nome_responsavel_cadastro,
-                    $telefone_cadastro,
+                    $telefone_numeros,
                     $endereco_ong,
                     $cidade_ong,
                     $estado_ong,
@@ -61,9 +71,20 @@
                 }
                 $erro = 'Não foi possível cadastrar a ONG. Confira os dados e tente novamente.';
             } catch (mysqli_sql_exception $e) {
-                $erro = $e->getCode() === 1062
-                    ? 'CNPJ ou e-mail já cadastrado.'
-                    : 'Não foi possível cadastrar a ONG. Confira os dados e tente novamente.';
+                if ($e->getCode() === 1062) {
+                    $msg = $e->getMessage();
+                    if (strpos($msg, 'uq_telefone_ong') !== false) {
+                        $erro = 'Este telefone já está cadastrado.';
+                    } elseif (strpos($msg, 'cd_email_ong') !== false) {
+                        $erro = 'Este e-mail já está cadastrado.';
+                    } elseif(telefone_em_uso($conn, $telefone_numeros)){
+                        $erro = 'Este telefone já está cadastrado.';
+                    } else {
+                        $erro = 'Este CNPJ já está cadastrado.';
+                    }
+                } else {
+                    $erro = 'Não foi possível cadastrar a ONG. Confira os dados e tente novamente.';
+                }
             }
         }
     }
@@ -194,6 +215,7 @@
 
         </div>
     </main>
+    <script src="../SCRIPT/cadastro.js"></script>
 </body>
 
 </html>

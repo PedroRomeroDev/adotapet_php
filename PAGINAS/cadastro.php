@@ -1,37 +1,55 @@
 <?php
     session_start();
     require_once("../conexao.php");
+    require_once("funcoes.php");
+    
 
     $erro = '';
     $nome_cadastro = $telefone_cadastro = $email_cadastro = '';
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $nome_cadastro     = trim($_POST["nome-cadastro"] ?? '');
-        $telefone_cadastro = trim($_POST["telefone-cadastro"] ?? '');
-        $email_cadastro    = trim($_POST["email-cadastro"] ?? '');
-        $senha_cadastro    = $_POST["senha-cadastro"] ?? '';
+    $nome_cadastro     = trim($_POST["nome-cadastro"] ?? '');
+    $telefone_cadastro = trim($_POST["telefone-cadastro"] ?? '');
+    $email_cadastro    = trim($_POST["email-cadastro"] ?? '');
+    $senha_cadastro    = $_POST["senha-cadastro"] ?? '';
 
-        if($nome_cadastro === '' || $telefone_cadastro === '' || $email_cadastro === '' || $senha_cadastro === ''){
-            $erro = 'Preencha todos os campos.';
-        } elseif(!filter_var($email_cadastro, FILTER_VALIDATE_EMAIL)){
-            $erro = 'Digite um e-mail válido.';
-        } else {
-            try {
-                $stmt = $conn->prepare("INSERT INTO USUARIO (nm_usuario, cd_email_usuario, cd_telefone_usuario, cd_senha_usuario) VALUES (?, ?, ?, ?)");
-                $stmt->bind_param("ssss", $nome_cadastro, $email_cadastro, $telefone_cadastro, $senha_cadastro);
-                if ($stmt->execute()) {
-                    header('Location: login.php');
-                    exit;
+    $telefone_numeros = preg_replace('/\D/', '', $telefone_cadastro);
+
+    if($nome_cadastro === '' || $telefone_cadastro === '' || $email_cadastro === '' || $senha_cadastro === ''){
+        $erro = 'Preencha todos os campos.';
+    } elseif(!filter_var($email_cadastro, FILTER_VALIDATE_EMAIL)){
+        $erro = 'Digite um e-mail válido.';
+    } elseif(strlen($telefone_numeros) < 10 || strlen($telefone_numeros) > 11){
+        $erro = 'Digite um telefone válido com DDD.';
+    } elseif(email_em_uso($conn, $email_cadastro)){
+        $erro = 'Este e-mail já está cadastrado.';
+    }elseif(telefone_em_uso($conn, $telefone_numeros)){
+        $erro = 'Este telefone já está cadastrado.';
+}    else {
+        try {
+
+            $stmt = $conn->prepare("INSERT INTO USUARIO (nm_usuario, cd_email_usuario, cd_telefone_usuario, cd_senha_usuario) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssss", $nome_cadastro, $email_cadastro, $telefone_numeros, $senha_cadastro);
+
+            if ($stmt->execute()) {
+                header('Location: login.php');
+                exit;
+            }
+            $erro = 'Não foi possível criar sua conta. Confira os dados e tente novamente.';
+
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() === 1062) {
+                if (strpos($e->getMessage(), 'uq_telefone_usuario') !== false) {
+                    $erro = 'Este telefone já está cadastrado.';
+                } else {
+                    $erro = 'Este e-mail já está cadastrado.';
                 }
+            } else {
                 $erro = 'Não foi possível criar sua conta. Confira os dados e tente novamente.';
-            } catch (mysqli_sql_exception $e) {
-                $erro = $e->getCode() === 1062
-                    ? 'Este e-mail já está cadastrado.'
-                    : 'Não foi possível criar sua conta. Confira os dados e tente novamente.';
             }
         }
-
     }
+}
 
 ?>
 
@@ -88,8 +106,12 @@
                         <div class="input-container">
                             <label for="telefone-cadastro">Telefone</label>
                             <input type="tel" id="telefone-cadastro" name="telefone-cadastro"
-                                placeholder="(00) 00000-0000" value="<?= htmlspecialchars($telefone_cadastro, ENT_QUOTES, 'UTF-8') ?>"
-                                maxlength="20" autocomplete="tel" required>
+                            placeholder="(00) 00000-0000"
+                            value="<?= htmlspecialchars($telefone_cadastro, ENT_QUOTES, 'UTF-8') ?>"
+                            maxlength="15" inputmode="numeric"
+                            pattern="\(\d{2}\) \d{4,5}-\d{4}"
+                            title="Digite no formato (00) 00000-0000"
+                            autocomplete="tel" required>
                         </div>
 
                         <div class="input-container">
@@ -118,9 +140,9 @@
                     </div>
                 </form>
             </section>
-
         </div>
     </main>
+    <script src="../SCRIPT/cadastro.js"></script>
 </body>
 
 </html>

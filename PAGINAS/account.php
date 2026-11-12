@@ -587,11 +587,6 @@ $telefoneExibicao = $usuario['cd_telefone_usuario'] ?? '';
                                     <span class="solicitation-status status-<?php echo e($statusClasse); ?>">
                                         <?php echo e($statusTexto); ?>
                                     </span>
-
-                                    <a href="detalhe_solicitacao.php?usuario=<?php echo (int) $s['id_usuario_fk']; ?>&pet=<?php echo (int) $s['id_pet_fk']; ?>"
-                                    class="solicitation-action" aria-label="Ver solicitação de <?php echo e($s['nm_pet']); ?>">
-                                        <i class="bi bi-chevron-right"></i>
-                                    </a>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
