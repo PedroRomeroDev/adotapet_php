@@ -106,7 +106,8 @@
     <link rel="stylesheet" href="../CSS/form-feedback.css">
     <link rel="shortcut icon" href="../assets/all_images/vazado.png">
     <link rel="stylesheet" href="../CSS/navbar.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"></head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">    <script src="../SCRIPT/preferencias.js"></script>
+</head>
 
 <body>
     <main class="container-form">

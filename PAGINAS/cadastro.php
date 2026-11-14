@@ -68,6 +68,7 @@
     <link rel="stylesheet" href="../CSS/cadastro.css?v=<?php echo filemtime(__DIR__ . '/../CSS/cadastro.css'); ?>">
     <link rel="stylesheet" href="../CSS/form-feedback.css">
     <link rel="shortcut icon" href="../assets/all_images/vazado.png">
+    <script src="../SCRIPT/preferencias.js"></script>
 </head>
 
 <body>

@@ -30,6 +30,10 @@
 }
 
 :root {
+    --superficie: #fff;
+    --campo-fundo: #f6f9f8;
+    --texto-fixo: #1f2a26;
+    --nav-link-hover: color-mix(in srgb, var(--cor-primaria) 12%, white);
     --fonte-titulo: 'Madimi One';
     --fonte-texto: 'Roboto';
     --fonte-botoes: 'Poppins';
@@ -95,6 +99,19 @@ button {
 }
 
 [data-theme="dark"] {
+    color-scheme: dark;
+    --superficie: #151c19;
+    --campo-fundo: #202b25;
+    --texto-fixo: #e6ece9;
+    --nav-link-hover: #2d4c3c;
+    --sobre-fundo: #0e1311;
+    --sobre-texto: #e6ece9;
+    --sobre-texto-suave: #b6c5bd;
+    --sobre-verde-escuro: #8dd7b6;
+    --sobre-menta: #1b3026;
+    --sobre-menta-borda: #3a5748;
+    --danger-text: #ff9999;
+    --danger-background: #491f28;
     --a-fundo: #0e1311;
     --a-card: #151c19;
     --a-lateral: #121815;
@@ -110,3 +127,9 @@ button {
     --a-ambar: #f0b43c;
     --a-laranja: #f2955a;
 }
+
+body { background-color: var(--sobre-fundo); color: var(--sobre-texto); }
+.theme-toggle { min-height: 44px; padding: 8px 12px; margin-left: 16px; border: 1px solid var(--sobre-menta-borda); border-radius: 8px; background: var(--superficie); color: var(--sobre-texto); cursor: pointer; }
+.theme-toggle:hover { background: var(--sobre-menta); }
+.skip-link { position: absolute; left: 16px; top: -100px; z-index: 9999; padding: 12px; background: var(--superficie); color: var(--sobre-texto); }
+.skip-link:focus { top: 8px; }

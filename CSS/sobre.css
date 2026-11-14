@@ -48,7 +48,7 @@ main p {
 
 .hero-logo {
     display: block;
-    background: #fff;
+    background: var(--superficie);
     border: 1px solid var(--sobre-menta-borda);
     border-radius: 5px;
     overflow: hidden;
@@ -67,7 +67,7 @@ main p {
     font-weight: 600;
     font-family: var(--fonte-titulo, inherit);
     font-size: 1.8rem;
-    color: #000;
+    color: var(--texto-fixo);
 }
 
 .hero-logo span b {
@@ -108,7 +108,7 @@ main p {
     counter-increment: passo;
     position: relative;
     padding: 28px 26px 30px;
-    background: #fff;
+    background: var(--superficie);
     border: 1px solid var(--sobre-menta-borda);
     border-radius: var(--sobre-raio);
 }
@@ -170,7 +170,7 @@ main p {
 
 .reviews-container {
     padding: 80px 0 96px;
-    background: #fff;
+    background: var(--superficie);
     border-top: 1px solid var(--sobre-menta-borda);
     scroll-margin-top: 80px;
 }

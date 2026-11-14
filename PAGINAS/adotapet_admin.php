@@ -183,7 +183,8 @@ foreach ($ongsEsperando as $o) {
         } catch (e) {}
     </script>
     <link rel="stylesheet" href="../CSS/navbar.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"></head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">    <script src="../SCRIPT/preferencias.js"></script>
+</head>
     <body>
     <aside id="sidebar">
         <a href="../index.php"><div class="brand"><img src="../assets/all_images/preto vazado.png" alt="AdotaPet"><span>Admin</span></div></a>

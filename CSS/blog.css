@@ -70,7 +70,7 @@ body {
     bottom: 16px;
     padding: 11px 16px;
     border-radius: 999px;
-    background: #fff;
+    background: var(--superficie);
     color: var(--sobre-verde-escuro);
     font-family: var(--fonte-titulo);
     font-size: 16px;

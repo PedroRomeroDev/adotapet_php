@@ -33,7 +33,8 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
         <link rel="shortcut icon" href="../assets/all_images/branco vazado.png">
         
-    </head>
+        <script src="../SCRIPT/preferencias.js"></script>
+</head>
     <body>
         <?php require_once __DIR__ . '/../navbar.php'; ?>
 

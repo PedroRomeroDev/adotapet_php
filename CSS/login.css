@@ -6,7 +6,7 @@ body {
     justify-content: center;
     padding: 32px 16px;
     font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    color: #1f2a26;
+    color: var(--texto-fixo);
     background: linear-gradient(to bottom right, #2c6d57, #333333);
     background-attachment: fixed;
 }
@@ -15,7 +15,7 @@ body {
     width: 100%;
     max-width: 880px;
     border-radius: 16px;
-    background-color: #fff;
+    background-color: var(--superficie);
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
 }
@@ -89,13 +89,13 @@ body {
     margin: 0 0 6px;
     font-size: 30px;
     font-weight: 700;
-    color: #2c6d57;
+    color: var(--sobre-verde-escuro);
 }
 
 .form-header p {
     margin: 0;
     font-size: 14px;
-    color: #5f6b66;
+    color: var(--sobre-texto-suave);
 }
 
 .campos {
@@ -113,7 +113,7 @@ body {
 .input-container label {
     font-size: 13px;
     font-weight: 500;
-    color: #3b4742;
+    color: var(--sobre-texto);
 }
 
 .container-form .login .second-column form input {
@@ -122,8 +122,8 @@ body {
     padding: 0 14px;
     font-family: inherit;
     font-size: 15px;
-    color: #1f2a26;
-    background-color: #f6f9f8;
+    color: var(--texto-fixo);
+    background-color: var(--campo-fundo);
     border: 1px solid #d5e0db;
     border-bottom: 1px solid var(--cor-primaria, #378b6f);
     border-radius: 8px;
@@ -140,7 +140,7 @@ body {
 }
 
 .container-form .login .second-column form input:focus {
-    background-color: #fff;
+    background-color: var(--superficie);
     border-color: #378b6f;
     box-shadow: 0 0 0 3px rgba(55, 139, 111, 0.2);
 }
@@ -149,12 +149,12 @@ body {
     align-self: flex-end;
     margin-top: 2px;
     font-size: 13px;
-    color: #5f6b66;
+    color: var(--sobre-texto-suave);
     text-decoration: none;
 }
 
 .container-form .login .second-column form .link-esqueci:hover {
-    color: #2c6d57;
+    color: var(--sobre-verde-escuro);
     text-decoration: underline;
 }
 
@@ -190,7 +190,7 @@ body {
     margin: 0;
     text-align: center;
     font-size: 14px;
-    color: #000000a4;
+    color: var(--sobre-texto-suave);
 }
 
 .container-form .login .second-column form .link-cadastro a {

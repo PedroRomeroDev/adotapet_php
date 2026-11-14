@@ -82,6 +82,7 @@
     <link rel="stylesheet" href="../CSS/login.css?v=<?php echo filemtime(__DIR__ . '/../CSS/login.css'); ?>">
     <link rel="stylesheet" href="../CSS/form-feedback.css">
     <link rel="shortcut icon" href="../assets/all_images/branco vazado.png">
+    <script src="../SCRIPT/preferencias.js"></script>
 </head>
 
 <body>

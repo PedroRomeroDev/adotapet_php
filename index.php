@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="CSS/hero.css">
     <link rel="stylesheet" href="CSS/footer.css">
     <title>AdotaPet - Welcome</title>
+    <script src="SCRIPT/preferencias.js"></script>
 </head>
 
 <body>

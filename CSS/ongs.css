@@ -69,7 +69,7 @@ main h3,
 
 .ongs-hero-numeros div {
     min-width: 110px;
-    background: #fff;
+    background: var(--superficie);
     color: var(--sobre-verde-escuro);
     border-radius: var(--sobre-raio);
     padding: .9rem 1.2rem;
@@ -302,7 +302,7 @@ main h3,
     width: 100%;
     height: 100%;
     object-fit: cover;
-    background: #fff;
+    background: var(--superficie);
 }
 
 .ong-avatar--lg {

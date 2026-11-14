@@ -83,7 +83,7 @@ main h3,
 .balloon-adopteds {
     position: relative;
     margin-top: auto;
-    background: #fff;
+    background: var(--superficie);
     color: var(--sobre-verde-escuro);
     border-radius: var(--sobre-raio);
     padding: .85rem 1.1rem;
@@ -98,7 +98,7 @@ main h3,
     left: 2.25rem;
     width: 16px;
     height: 16px;
-    background: #fff;
+    background: var(--superficie);
     transform: rotate(45deg);
     border-radius: 3px;
 }
@@ -346,7 +346,7 @@ main h3,
     width: 100%;
     height: 100%;
     object-fit: cover;
-    background: #fff;
+    background: var(--superficie);
 }
 
 .btn-ver-mais {

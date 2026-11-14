@@ -10,6 +10,7 @@ $baseUrl = '/adotapet_php';
         <a href="<?= $baseUrl ?>/index.php">
             <h1><span>Adota</span>Pet</h1>
         </a>
+        <button class="theme-toggle" type="button" data-toggle-theme aria-pressed="false">Modo escuro</button>
         <button class="menuBtn" id="menuBtn" type="button" aria-label="Abrir menu">
             <i class="bi bi-list"></i>
         </button>

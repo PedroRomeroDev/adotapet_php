@@ -1,0 +1,26 @@
+.perdidos-hero { grid-template-columns: 1.5fr 1fr; }
+.perdidos-guide { border-left: 1px solid var(--sobre-menta-borda); padding-left: 32px; line-height: 1.7; }
+.perdidos-guide h2, .perdidos-wrap h2, .perdido-card h3 { font-family: var(--fonte-titulo); font-weight: 400; color: var(--sobre-verde-escuro); }
+.perdidos-guide p { margin: 16px 0; color: var(--sobre-texto-suave); }
+.perdidos-guide a { color: var(--sobre-verde-escuro); }
+.perdidos-search { margin-bottom: 32px; }
+.perdidos-search > div { display: flex; gap: 12px; }
+.perdidos-search button { flex-shrink: 0; }
+.perdidos-wrap label { display: block; margin-bottom: 8px; line-height: 1.5; }
+.perdidos-wrap input, .perdidos-wrap textarea { width: 100%; min-width: 0; padding: 12px; border: 1px solid var(--sobre-menta-borda); border-radius: 8px; background: var(--a-card); color: var(--sobre-texto); font-size: 16px; }
+.perdidos-wrap button { min-height: 44px; padding: 12px 20px; border: 1px solid var(--cor-primaria); background: var(--cor-primaria); color: white; border-radius: 8px; cursor: pointer; }
+.perdidos-wrap button:hover, .perdidos-wrap .blog-button:hover { background: #286951; color: white; }
+.perdidos-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 24px 0 48px; }
+.perdido-card { border: 1px solid var(--sobre-menta-borda); border-radius: 16px; overflow: hidden; background: var(--a-card); }
+.perdido-card img { width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; display: block; }
+.perdido-copy { padding: 24px; overflow-wrap: anywhere; }
+.perdido-copy h3 { font-size: 1.8rem; margin: 8px 0; }
+.perdido-copy p { line-height: 1.6; margin: 12px 0; }
+.perdido-status { font-size: 13px; color: var(--sobre-texto-suave); }
+.perdidos-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; padding: 32px; background: var(--a-card); border: 1px solid var(--sobre-menta-borda); border-radius: 16px; }
+.perdidos-full { grid-column: 1/-1; line-height: 1.6; }
+.perdidos-message { margin: 24px 0; padding: 20px; background: var(--sobre-menta); border-radius: 8px; }
+.perdidos-message.is-error { color: var(--danger-text); background: var(--danger-background); }
+.perdidos-wrap .perdidos-secondary { background: transparent; color: var(--sobre-verde-escuro); }
+@media (max-width: 900px) { .perdidos-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 700px) { .perdidos-hero, .perdidos-form, .perdidos-grid { grid-template-columns: 1fr; } .perdidos-guide { border-left: 0; border-top: 1px solid var(--sobre-menta-borda); padding: 24px 0 0; } .perdidos-form { padding: 20px; } .perdidos-search > div { flex-direction: column; } }

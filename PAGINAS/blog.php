@@ -37,6 +37,7 @@ function blogData($valor): string
     <link rel="stylesheet" href="../CSS/variaveis.css">
     <link rel="stylesheet" href="../CSS/navbar.css">
     <link rel="stylesheet" href="../CSS/blog.css">
+    <script src="../SCRIPT/preferencias.js"></script>
 </head>
 <body>
     <?php require_once __DIR__ . '/../navbar.php'; ?>

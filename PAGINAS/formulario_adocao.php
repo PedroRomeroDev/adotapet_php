@@ -48,7 +48,8 @@ $max_nascimento = date('Y-m-d', strtotime('-18 years'));
         <link rel="stylesheet" href="../CSS/formulario_adocao.css">
         <link rel="stylesheet" href="../CSS/variaveis.css">
         <link rel="shortcut icon" href="../assets/all_images/branco vazado.png">
-    </head>
+        <script src="../SCRIPT/preferencias.js"></script>
+</head>
     <body>
         <?php require_once __DIR__ . '/../navbar.php'; ?>
         <section class="adoption-form-container">

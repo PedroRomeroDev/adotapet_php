@@ -150,6 +150,7 @@ $status = $_GET['status'] ?? '';
     <title>Gerenciar blog | AdotaPet Admin</title>
     <link rel="stylesheet" href="../CSS/variaveis.css">
     <link rel="stylesheet" href="../CSS/blog-admin.css">
+    <script src="../SCRIPT/preferencias.js"></script>
 </head>
 <body>
     <main class="blog-admin-wrap">
