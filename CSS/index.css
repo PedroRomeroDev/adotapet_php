@@ -8,14 +8,18 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 50px;
+    align-items: stretch;      /* cards da mesma linha com a mesma altura */
+    gap: 30px;
 }
 
+/* Avatar */
 .card-avatar {
     background-color: var(--cor-primaria);
-    width: 50px;
-    height: 50px;
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;            /* impede de ser espremido pelo nome */
     border-radius: 50%;
+    overflow: hidden;          /* corta a imagem no formato redondo */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,32 +28,46 @@ main {
 .card-avatar p {
     color: #ffffff;
     font-weight: 600;
+    margin: 0;
 }
 
+.card-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;         /* preenche sem deformar */
+    display: block;
+}
+
+/* Card */
 .avaliations .card-avaliation {
-    width: 300px;
+    flex: 0 0 300px;           /* largura fixa de 300px, sem encolher */
     box-shadow: 0px 0px 10px 0px #00000027;
     padding: 20px;
     overflow: hidden;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .avaliations .card-avaliation .card-header-avaliation {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
 .avaliations .card-avaliation .card-header-avaliation p {
-    font-weight: 100px;
+    font-weight: 600;
+    margin: 0;
 }
 
-.avaliations .card-avaliation .card-header-avaliation img {
-    width: 60px;
-    height: 55px;
-    border-radius: 50%;
+.avaliations .card-avaliation .content-card-avaliation p {
+    margin: 0;
+    line-height: 1.5;
+    word-break: break-word;    /* evita texto longo estourar o card */
 }
 
-
+.avaliations .card-avaliation {
+    background-color: var(--cor-fundo-card); /* use o nome da sua variável */
+}

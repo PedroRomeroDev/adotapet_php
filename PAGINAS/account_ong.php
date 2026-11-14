@@ -816,17 +816,6 @@ $cnpjExibicao = strlen($cnpj) === 14
                                 <span class="slider"></span>
                             </label>
                         </li>
-                        <li class="preference">
-                            <div class="preference-icon"><i class="bi bi-circle-half"></i></div>
-                            <div class="preference-text">
-                                <strong>Alto contraste</strong>
-                                <span>Destaca textos e elementos para facilitar a leitura.</span>
-                            </div>
-                            <label class="switch">
-                                <input type="checkbox" id="toggle-altoContraste">
-                                <span class="slider"></span>
-                            </label>
-                        </li>
                     </ul>
                 </section>
 

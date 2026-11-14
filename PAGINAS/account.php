@@ -304,6 +304,7 @@ $telefoneExibicao = $usuario['cd_telefone_usuario'] ?? '';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../CSS/navbar.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">    <script src="../SCRIPT/preferencias.js"></script>
+    <link rel="shortcut icon" href="../assets/all_images/branco vazado.png">
 </head>
 <body>
     <?php require_once __DIR__ . '/../navbar.php'; ?>
@@ -377,9 +378,6 @@ $telefoneExibicao = $usuario['cd_telefone_usuario'] ?? '';
                 </a>
                 <a href="#solicitacoes" class="menu-item" data-section="solicitacao">
                     <i class="fa-solid fa-folder-open"></i> Minhas Solicitações
-                </a>
-                <a href="#perdidos" class="menu-item" data-section="perdidos">
-                    <i class="fa-solid fa-bone"></i> Pet's Perdidos
                 </a>
                 <a href="#avaliacao" class="menu-item" data-section="avaliacao">
                     <i class="bi bi-chat-heart-fill"></i> Minha avaliação
@@ -509,11 +507,6 @@ $telefoneExibicao = $usuario['cd_telefone_usuario'] ?? '';
                         </div>
                     </form>
                 </section>
-
-                <section class="card" id="perdidos" data-panel>
-                    <p>FAZ AQUI A SEÇÃO DE PETS PERDIDOS</p>
-                </section>
-
                 <section class="card" id="preferencias" data-panel>
                     <header class="card-header">
                         <h2>Preferências</h2>
@@ -529,17 +522,6 @@ $telefoneExibicao = $usuario['cd_telefone_usuario'] ?? '';
                             </div>
                             <label class="switch">
                                 <input type="checkbox" id="toggle-modoEscuro">
-                                <span class="slider"></span>
-                            </label>
-                        </li>
-                        <li class="preference">
-                            <div class="preference-icon"><i class="bi bi-circle-half"></i></div>
-                            <div class="preference-text">
-                                <strong>Alto contraste</strong>
-                                <span>Destaca textos e elementos para facilitar a leitura.</span>
-                            </div>
-                            <label class="switch">
-                                <input type="checkbox" id="toggle-altoContraste">
                                 <span class="slider"></span>
                             </label>
                         </li>
